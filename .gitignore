@@ -1,0 +1,44 @@
+# Python/Django
+venv/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.sqlite3
+*.log
+*.pot
+*.pyc
+*.pyo
+*.pyd
+*.db
+*.sqlite3
+*.env
+.env.*
+.DS_Store
+
+# Django static/media
+staticfiles/
+media/
+
+# Node/Ionic
+Front_end/node_modules/
+Front_end/peaceVSfront/node_modules/
+Front_end/peaceVSfront/www/
+Front_end/peaceVSfront/dist/
+
+# VSCode
+.vscode/
+
+# System
+Thumbs.db
+.DS_Store
+
+# Others
+*.swp
+*.swo
+.idea/
+*.iml
+
+# Environment
+.env
+.env.*
