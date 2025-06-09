@@ -77,6 +77,54 @@ A aplicação estará disponível em `http://localhost:8100/`.
 
 ---
 
+## Configuração do Banco de Dados (PostgreSQL via Docker)
+
+1. **Certifique-se de ter o Docker instalado em sua máquina.**
+
+2. **Na raiz do projeto, suba o serviço do banco de dados:**
+   ```bash
+   docker-compose up -d
+   ```
+   Isso irá criar e iniciar um container PostgreSQL acessível na porta 5432.
+
+3. **Configurações de acesso:**
+   - Usuário: `mainuser`
+   - Senha: `123456789`
+   - Host: `localhost`
+   - Porta: `5432`
+   - Banco de dados: (crie um nome, por exemplo, `peacvs_db`)
+
+4. **No Django, configure o banco de dados no arquivo `Back_end/project/settings.py`**
+   Exemplo:
+   ```python
+   DATABASES = {
+       'default': {
+           'ENGINE': 'django.db.backends.postgresql',
+           'NAME': 'peacvs_db',
+           'USER': 'mainuser',
+           'PASSWORD': '123456789',
+           'HOST': 'localhost',
+           'PORT': '5432',
+       }
+   }
+   ```
+
+5. **Crie o banco de dados no PostgreSQL (se necessário):**
+   Você pode acessar o container e criar o banco manualmente:
+   ```bash
+   docker exec -it <nome_ou_id_do_container> psql -U mainuser
+   CREATE DATABASE peacvs_db;
+   \q
+   ```
+   Ou use uma ferramenta gráfica como DBeaver ou pgAdmin.
+
+6. **Siga os passos normais do Django para aplicar as migrações:**
+   ```bash
+   python manage.py migrate
+   ```
+
+---
+
 ## Observações
 - O frontend consome a API do backend via HTTP. Certifique-se de que ambos estejam rodando.
 - Ajuste as URLs de API nos arquivos de ambiente do Angular (`src/environments/environment.ts`) conforme necessário.
