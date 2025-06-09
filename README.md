@@ -43,18 +43,32 @@ A API estará disponível em `http://localhost:8000/`.
 
 ## Configuração do Front_end (Ionic + Angular)
 
+
+### Em outro terminal, siga os passos abaixo para configurar o frontend:
+
 1. **Acesse a pasta do frontend:**
    ```bash
-   cd Front_end/peaceVSfront
+   cd Front_end
    ```
 
 2. **Instale as dependências do Node.js:**
    ```bash
    npm install
    ```
+
+3. **Acesse a pasta do frontend:**
+   ```bash
+   cd peaceVSfront
+   ```
+
+4. **Instale as dependências do Node.js:**
+   ```bash
+   npm install
+   ```
+
    > Rode este comando dentro de cada pasta que possuir um arquivo `package.json` relevante para o seu projeto. Neste caso, o principal é rodar em `Front_end/` e em `Front_end/peaceVSfront/`. Mesmo que exista a pasta `node_modules`, ainda assim é necessário rodar `npm install` para garantir que todas as dependências estejam corretas e atualizadas.
 
-3. **Inicie o servidor de desenvolvimento:**
+5. **Inicie o servidor de desenvolvimento:**
    ```bash
    npx ionic serve
    ```
