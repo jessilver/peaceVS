@@ -27,7 +27,15 @@ class GroupsSeeder(BaseSeeder):
         )
         support_group.permissions.set(support_perms)
 
-        if not admin_created and not mod_created and not support_created:
-            self.error('Grupos de permissão já existem: Administrador, Moderador, Suporte')
+        # Grupo: Usuario (permissões básicas, ex: visualizar próprio perfil)
+        user_group, user_created = Group.objects.get_or_create(name='Usuario')
+        user_perms = Permission.objects.filter(
+            content_type__app_label='users',
+            codename__startswith='view_'
+        )
+        user_group.permissions.set(user_perms)
+
+        if not admin_created and not mod_created and not support_created and not user_created:
+            self.error('Grupos de permissão já existem: Administrador, Moderador, Suporte, Usuário')
         else:
-            self.succes('Grupos de permissão criados e configurados: Administrador, Moderador, Suporte')
+            self.succes('Grupos de permissão criados e configurados: Administrador, Moderador, Suporte, Usuário')
