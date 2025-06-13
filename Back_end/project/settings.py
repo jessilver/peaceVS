@@ -50,6 +50,9 @@ INSTALLED_APPS = [
 
 SEEDER_APPS = [
     'users',
+    'subscriptions',
+    'media',
+    'interactions',
 ]
 
 MIDDLEWARE = [

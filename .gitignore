@@ -18,7 +18,6 @@ __pycache__/
 
 # Django static/media
 staticfiles/
-media/
 
 # Node/Ionic
 Front_end/node_modules/

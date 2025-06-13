@@ -1,25 +1,22 @@
-from jessilver_django_seed.seeders.BaseSeeder import BaseSeeder
+from django.core.management.base import BaseCommand
 from media.models import Filme, Serie, Temporada, Episodio, Genero, Pessoa
+from users.models import CustomUser, UserProfile
 from subscriptions.models import PlanoAssinatura
 import random
 
-class SampleDataSeeder(BaseSeeder):
-    @property
-    def seeder_name(self):
-        return 'SampleDataSeeder'
+class Command(BaseCommand):
+    help = 'Popula o banco com dados de exemplo para desenvolvimento.'
 
-    def seed(self):
+    def handle(self, *args, **options):
         # Gêneros
         generos = ['Ação', 'Comédia', 'Drama', 'Ficção', 'Terror', 'Documentário']
         genero_objs = []
         for nome in generos:
             obj, _ = Genero.objects.get_or_create(nome=nome, slug=nome.lower())
             genero_objs.append(obj)
-
         # Pessoas
         atores = ['João Silva', 'Maria Souza', 'Carlos Lima', 'Ana Paula']
         pessoas = [Pessoa.objects.get_or_create(nome_completo=nome, slug=nome.lower().replace(' ', '-'))[0] for nome in atores]
-
         # Filmes
         for i in range(3):
             filme = Filme.objects.create(
@@ -32,7 +29,6 @@ class SampleDataSeeder(BaseSeeder):
                 ativo=True
             )
             filme.generos.set(random.sample(genero_objs, 2))
-
         # Séries, temporadas e episódios
         for i in range(2):
             serie = Serie.objects.create(
@@ -59,7 +55,6 @@ class SampleDataSeeder(BaseSeeder):
                         duracao_minutos=45,
                         arquivo_video_url=f'http://video.com/serie{i+1}t{t}e{e}.mp4'
                     )
-
         # Planos de assinatura
         planos = [
             {'nome_plano': 'Básico', 'slug': 'basico', 'preco_mensal': 19.90, 'qualidade_video_permitida': 'HD', 'numero_telas_simultaneas': 2},
@@ -67,5 +62,4 @@ class SampleDataSeeder(BaseSeeder):
         ]
         for plano in planos:
             PlanoAssinatura.objects.get_or_create(**plano)
-
-        self.succes('Dados de exemplo criados com sucesso!')
+        self.stdout.write(self.style.SUCCESS('Dados de exemplo criados com sucesso!'))
