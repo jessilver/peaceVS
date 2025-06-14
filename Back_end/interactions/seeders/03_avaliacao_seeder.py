@@ -1,7 +1,7 @@
 from jessilver_django_seed.seeders.BaseSeeder import BaseSeeder
 from interactions.models import Avaliacao
 from users.models import UserProfile
-from media.models import Filme
+from conteudo.models import Filme
 
 class AvaliacaoSeeder(BaseSeeder):
     @property

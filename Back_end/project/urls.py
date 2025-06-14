@@ -23,7 +23,7 @@ from drf_yasg import openapi
 from rest_framework.authtoken.views import obtain_auth_token
 
 from users.views import CustomUserViewSet, UserProfileViewSet, CustomObtainAuthToken, UserSignupView
-from media.views import FilmeViewSet, SerieViewSet, TemporadaViewSet, EpisodioViewSet, GeneroViewSet, PessoaViewSet, CreditoMidiaViewSet
+from conteudo.views import FilmeViewSet, SerieViewSet, TemporadaViewSet, EpisodioViewSet, GeneroViewSet, PessoaViewSet, CreditoMidiaViewSet
 from interactions.views import ItemListaInteresseViewSet, HistoricoVisualizacaoViewSet, AvaliacaoViewSet
 from subscriptions.views import PlanoAssinaturaViewSet, AssinaturaUsuarioViewSet
 

@@ -52,7 +52,7 @@ class Migration(migrations.Migration):
                 ('ativo', models.BooleanField(default=True)),
                 ('duracao_minutos', models.PositiveIntegerField(help_text='Duração do filme em minutos')),
                 ('arquivo_video_url', models.URLField(help_text='URL do arquivo de vídeo do filme', max_length=1000)),
-                ('generos', models.ManyToManyField(blank=True, related_name='filmes', to='media.genero')),
+                ('generos', models.ManyToManyField(blank=True, related_name='filmes', to='conteudo.genero')),
             ],
             options={
                 'ordering': ['-data_adicao'],
@@ -72,7 +72,7 @@ class Migration(migrations.Migration):
                 ('slug', models.SlugField(help_text='Identificador único para URLs amigáveis', max_length=255, unique=True)),
                 ('ativo', models.BooleanField(default=True)),
                 ('status', models.CharField(blank=True, choices=[('EM_ANDAMENTO', 'Em Andamento'), ('FINALIZADA', 'Finalizada'), ('CANCELADA', 'Cancelada')], default='EM_ANDAMENTO', max_length=20, null=True)),
-                ('generos', models.ManyToManyField(blank=True, related_name='series', to='media.genero')),
+                ('generos', models.ManyToManyField(blank=True, related_name='series', to='conteudo.genero')),
             ],
             options={
                 'ordering': ['-data_adicao'],
@@ -86,9 +86,9 @@ class Migration(migrations.Migration):
                 ('tipo_credito', models.CharField(choices=[('ATOR', 'Ator/Atriz'), ('DIRETOR', 'Diretor(a)'), ('ROTEIRISTA', 'Roteirista'), ('PRODUTOR', 'Produtor(a)')], max_length=50)),
                 ('personagem_nome', models.CharField(blank=True, max_length=150, null=True)),
                 ('ordem', models.PositiveIntegerField(default=0)),
-                ('filme', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, related_name='creditos_filme', to='media.filme')),
-                ('pessoa', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='creditos', to='media.pessoa')),
-                ('serie', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, related_name='creditos_serie', to='media.serie')),
+                ('filme', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, related_name='creditos_filme', to='conteudo.filme')),
+                ('pessoa', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='creditos', to='conteudo.pessoa')),
+                ('serie', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, related_name='creditos_serie', to='conteudo.serie')),
             ],
             options={
                 'ordering': ['ordem', 'pessoa__nome_completo'],
@@ -102,7 +102,7 @@ class Migration(migrations.Migration):
                 ('titulo', models.CharField(blank=True, max_length=255, null=True)),
                 ('ano_lancamento', models.PositiveIntegerField(blank=True, null=True)),
                 ('imagem_poster_url', models.URLField(blank=True, max_length=500, null=True)),
-                ('serie', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='temporadas', to='media.serie')),
+                ('serie', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='temporadas', to='conteudo.serie')),
             ],
             options={
                 'ordering': ['serie', 'numero_temporada'],
@@ -120,7 +120,7 @@ class Migration(migrations.Migration):
                 ('arquivo_video_url', models.URLField(max_length=1000)),
                 ('data_lancamento_original', models.DateField(blank=True, null=True)),
                 ('imagem_thumbnail_url', models.URLField(blank=True, max_length=500, null=True)),
-                ('temporada', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='episodios', to='media.temporada')),
+                ('temporada', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='episodios', to='conteudo.temporada')),
             ],
             options={
                 'ordering': ['temporada', 'numero_episodio'],

@@ -40,7 +40,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'drf_yasg',
     'users',
-    'media',
+    'conteudo',
     'interactions',
     'subscriptions',
     'rest_framework.authtoken',
@@ -51,7 +51,7 @@ INSTALLED_APPS = [
 SEEDER_APPS = [
     'users',
     'subscriptions',
-    'media',
+    'conteudo',
     'interactions',
 ]
 

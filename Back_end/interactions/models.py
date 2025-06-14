@@ -18,8 +18,8 @@ class ItemListaInteresse(models.Model):
 
 class HistoricoVisualizacao(models.Model):
     perfil_usuario = models.ForeignKey('users.UserProfile', on_delete=models.CASCADE, related_name='historico_visualizacao')
-    filme = models.ForeignKey('media.Filme', on_delete=models.CASCADE, null=True, blank=True, related_name='visualizacoes_historico')
-    episodio = models.ForeignKey('media.Episodio', on_delete=models.CASCADE, null=True, blank=True, related_name='visualizacoes_historico')
+    filme = models.ForeignKey('conteudo.Filme', on_delete=models.CASCADE, null=True, blank=True, related_name='visualizacoes_historico')
+    episodio = models.ForeignKey('conteudo.Episodio', on_delete=models.CASCADE, null=True, blank=True, related_name='visualizacoes_historico')
     progresso_segundos = models.PositiveIntegerField(default=0)
     ultima_visualizacao_em = models.DateTimeField(auto_now=True)
     concluido = models.BooleanField(default=False)
@@ -49,8 +49,8 @@ class HistoricoVisualizacao(models.Model):
 class Avaliacao(models.Model):
     NOTA_CHOICES = [(i, str(i)) for i in range(1, 6)]
     perfil_usuario = models.ForeignKey('users.UserProfile', on_delete=models.CASCADE, related_name='avaliacoes_feitas')
-    filme = models.ForeignKey('media.Filme', on_delete=models.CASCADE, null=True, blank=True, related_name='avaliacoes_recebidas')
-    serie = models.ForeignKey('media.Serie', on_delete=models.CASCADE, null=True, blank=True, related_name='avaliacoes_recebidas')
+    filme = models.ForeignKey('conteudo.Filme', on_delete=models.CASCADE, null=True, blank=True, related_name='avaliacoes_recebidas')
+    serie = models.ForeignKey('conteudo.Serie', on_delete=models.CASCADE, null=True, blank=True, related_name='avaliacoes_recebidas')
     nota = models.PositiveSmallIntegerField(choices=NOTA_CHOICES)
     comentario_texto = models.TextField(blank=True, null=True)
     data_avaliacao = models.DateTimeField(auto_now_add=True)

@@ -15,7 +15,7 @@ class GroupsSeeder(BaseSeeder):
         # Grupo: Moderador (pode gerenciar conteúdo, mas não usuários/assinaturas)
         mod_group, mod_created = Group.objects.get_or_create(name='Moderador')
         mod_perms = Permission.objects.filter(
-            content_type__app_label__in=['media', 'interactions']
+            content_type__app_label__in=['conteudo', 'interactions']
         )
         mod_group.permissions.set(mod_perms)
 

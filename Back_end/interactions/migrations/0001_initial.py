@@ -9,7 +9,7 @@ class Migration(migrations.Migration):
     initial = True
 
     dependencies = [
-        ('media', '0001_initial'),
+        ('conteudo', '0001_initial'),
     ]
 
     operations = [
@@ -46,7 +46,7 @@ class Migration(migrations.Migration):
                 ('nota', models.PositiveSmallIntegerField(choices=[(1, '1'), (2, '2'), (3, '3'), (4, '4'), (5, '5')])),
                 ('comentario_texto', models.TextField(blank=True, null=True)),
                 ('data_avaliacao', models.DateTimeField(auto_now_add=True)),
-                ('filme', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, related_name='avaliacoes_recebidas', to='media.filme')),
+                ('filme', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, related_name='avaliacoes_recebidas', to='conteudo.filme')),
             ],
             options={
                 'verbose_name': 'Avaliação',

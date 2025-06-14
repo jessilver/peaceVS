@@ -1,5 +1,5 @@
 from jessilver_django_seed.seeders.BaseSeeder import BaseSeeder
-from media.models import Serie, Temporada
+from conteudo.models import Serie, Temporada
 
 class TemporadaSeeder(BaseSeeder):
     @property

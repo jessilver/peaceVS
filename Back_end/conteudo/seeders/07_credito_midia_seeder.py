@@ -1,5 +1,5 @@
 from jessilver_django_seed.seeders.BaseSeeder import BaseSeeder
-from media.models import CreditoMidia, Pessoa, Filme
+from conteudo.models import CreditoMidia, Pessoa, Filme
 
 class CreditoMidiaSeeder(BaseSeeder):
     @property
