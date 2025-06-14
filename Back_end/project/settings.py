@@ -12,15 +12,16 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 
 from pathlib import Path
 import os
-try:
-    from dotenv import load_dotenv
-    # Carregar variáveis do arquivo .env na raiz do projeto
-    load_dotenv(os.path.join(BASE_DIR.parent, '.env'))
-except ImportError:
-    pass  # python-dotenv não instalado, apenas ignora
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+
+# Carregar variáveis do arquivo .env na raiz do projeto
+try:
+    from dotenv import load_dotenv
+    load_dotenv(os.path.join(BASE_DIR.parent, '.env'))
+except ImportError:
+    pass  # python-dotenv não instalado, apenas ignora
 
 # Diretórios customizados para static e templates do app web
 WEB_APP_DIR = os.path.join(BASE_DIR, 'web')
