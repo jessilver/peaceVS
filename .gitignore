@@ -16,7 +16,7 @@ __pycache__/
 .env.*
 .DS_Store
 
-# Django static/media
+# Django static
 staticfiles/
 
 # Node/Ionic

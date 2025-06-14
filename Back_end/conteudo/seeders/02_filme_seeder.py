@@ -1,5 +1,5 @@
 from jessilver_django_seed.seeders.BaseSeeder import BaseSeeder
-from media.models import Filme, Genero
+from conteudo.models import Filme, Genero
 from django.utils.timezone import now
 
 class FilmeSeeder(BaseSeeder):

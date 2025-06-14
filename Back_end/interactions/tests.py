@@ -1,6 +1,6 @@
 from django.test import TestCase
 from users.models import CustomUser, UserProfile
-from media.models import Filme, Serie
+from conteudo.models import Filme, Serie
 from .models import ItemListaInteresse, HistoricoVisualizacao, Avaliacao
 
 class ItemListaInteresseModelTest(TestCase):

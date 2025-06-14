@@ -1,5 +1,5 @@
 from jessilver_django_seed.seeders.BaseSeeder import BaseSeeder
-from media.models import Pessoa
+from conteudo.models import Pessoa
 
 class PessoaSeeder(BaseSeeder):
     @property
