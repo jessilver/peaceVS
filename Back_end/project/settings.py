@@ -11,9 +11,17 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 
 from pathlib import Path
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+
+# Diretórios customizados para static e templates do app web
+WEB_APP_DIR = os.path.join(BASE_DIR, 'web')
+STATICFILES_DIRS = [
+    os.path.join(WEB_APP_DIR, 'static'),
+]
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles_collected')
 
 
 # Quick-start development settings - unsuitable for production
@@ -26,7 +34,6 @@ SECRET_KEY = 'django-insecure-r8l60h5*d+vcacr(-5g5d9ui!9@u@yz$w_1xjzdfeyo*9ubcyf
 DEBUG = True
 
 ALLOWED_HOSTS = []
-
 
 # Application definition
 
@@ -44,7 +51,8 @@ INSTALLED_APPS = [
     'interactions',
     'subscriptions',
     'rest_framework.authtoken',
-    'jessilver_django_seed' 
+    'jessilver_django_seed',
+    'web',
 ]
 
 
@@ -70,7 +78,7 @@ ROOT_URLCONF = 'project.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(WEB_APP_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
