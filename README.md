@@ -125,6 +125,17 @@ A aplicação estará disponível em `http://localhost:8100/`.
 
 ---
 
+## Configuração do .env
+
+1. Copie o arquivo `Back_end/.env-example` para `Back_end/.env`:
+   ```bash
+   cp Back_end/.env-example Back_end/.env
+   ```
+2. Edite o arquivo `.env` com as variáveis do seu ambiente (banco de dados, secret key, CORS, etc).
+3. Nunca versionar o `.env` no git. Use sempre o `.env-example` como modelo para novos ambientes.
+
+---
+
 ## Observações
 - O frontend consome a API do backend via HTTP. Certifique-se de que ambos estejam rodando.
 - Ajuste as URLs de API nos arquivos de ambiente do Angular (`src/environments/environment.ts`) conforme necessário.
