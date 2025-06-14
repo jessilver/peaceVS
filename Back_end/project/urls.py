@@ -21,6 +21,7 @@ from rest_framework import permissions
 from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
 from rest_framework.authtoken.views import obtain_auth_token
+from django.views.generic import RedirectView
 
 from users.views import CustomUserViewSet, UserProfileViewSet, CustomObtainAuthToken, UserSignupView
 from conteudo.views import FilmeViewSet, SerieViewSet, TemporadaViewSet, EpisodioViewSet, GeneroViewSet, PessoaViewSet, CreditoMidiaViewSet
@@ -58,7 +59,9 @@ schema_view = get_schema_view(
 )
 
 urlpatterns = [
+    path('', RedirectView.as_view(url='/web/', permanent=False)),
     path('admin/', admin.site.urls),
+    path('web/', include('web.urls')),
     path('api/', include(router.urls)),
     path('api/token/', CustomObtainAuthToken.as_view(), name='api_token_auth'),
     path('api/signup/', UserSignupView.as_view(), name='api_signup'),
