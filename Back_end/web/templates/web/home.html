@@ -1,11 +1,23 @@
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <title>PeaceVS Web</title>
-</head>
-<body>
+{% extends "layouts/_base.html" %}
+
+{% block content %}
     <h1>Bem-vindo ao PeaceVS Web!</h1>
     <p>Este é o frontend web Django do seu projeto.</p>
-</body>
-</html>
+    <div class="dropdown">
+  <button
+    class="btn btn-primary dropdown-toggle"
+    type="button"
+    id="dropdownMenuButton"
+    data-mdb-dropdown-init
+    data-mdb-ripple-init
+    aria-expanded="false"
+  >
+    Dropdown button
+  </button>
+  <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+    <li><a class="dropdown-item" href="#">Action</a></li>
+    <li><a class="dropdown-item" href="#">Another action</a></li>
+    <li><a class="dropdown-item" href="#">Something else here</a></li>
+  </ul>
+</div>
+{% endblock %}
