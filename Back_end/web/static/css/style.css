@@ -95,3 +95,32 @@
   color: var(--accent-magenta) !important;
   background: var(--surface-l4) !important;
 }
+
+#intro {
+    background-image: url(https://mdbootstrap.com/img/new/fluid/city/008.jpg);
+    height: 100vh;
+}
+
+/* Height for devices larger than 576px */
+@media (min-width: 992px) {
+    #intro {
+        margin-top: -58.59px;
+    }
+}
+
+#intro.bg-image {
+  position: relative;
+  z-index: 0;
+}
+#intro.bg-image img, #intro.bg-image::before, #intro.bg-image::after {
+  z-index: 0 !important;
+}
+#intro .container, #intro .mask {
+  position: relative;
+  z-index: 1;
+}
+
+.navbar {
+    position: relative;
+    z-index: 10;
+}

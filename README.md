@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="Back_end/web/static/images/Full_Logo.svg" alt="PeacVS Logo" width="320"/>
+</p>
+
 # PeacVS - Configuração Inicial
 
 Este projeto é composto por dois módulos principais:
