@@ -121,7 +121,7 @@ body {
   z-index: 0 !important;
 }
 
-#intro .container, #intro .mask {
+#intro .container-fluid, #intro .mask {
   position: relative;
   z-index: 1;
 }
