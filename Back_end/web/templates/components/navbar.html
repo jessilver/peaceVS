@@ -1,0 +1,140 @@
+<!-- Navbar -->
+ {% load static %}
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark" style="background: var(--surface-l4) !important; color: var(--content-primary) !important;">
+  <!-- Container wrapper -->
+  <div class="container">
+    <!-- Toggle button -->
+    <button
+      data-mdb-collapse-init
+      class="navbar-toggler"
+      type="button"
+      data-mdb-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+      style="color: var(--primary);"
+    >
+      <i class="fas fa-bars"></i>
+    </button>
+
+    <!-- Collapsible wrapper -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <!-- Navbar brand -->
+      <a class="navbar-brand mt-2 mt-lg-0" href="#" style="color: var(--primary);">
+        <img src="{% static 'images/Full_Logo.svg' %}" height="40" alt="pVS Logo" loading="lazy" />
+      </a>
+      <!-- Left links -->
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link" href="#" style="color: var(--content-primary);">Inicio</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#" style="color: var(--content-primary);">Filmes</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#" style="color: var(--content-primary);">Series</a>
+        </li>
+      </ul>
+      <!-- Left links -->
+      <!-- Search form -->
+      <form class="d-flex input-group w-auto mb-2 mb-lg-0 me-3 neon-search" style="background: var(--surface-l2); border-width: 2px;">
+        <input
+          type="search"
+          class="form-control rounded-0"
+          placeholder="Search"
+          aria-label="Search"
+          aria-describedby="search-addon"
+          style="background: var(--surface-l1); color: var(--content-primary); font-size: 1.1rem; font-weight: 500; letter-spacing: 0.5px;"
+        />
+        <span class="input-group-text border-0" id="search-addon" style="background: transparent; color: var(--accent-cyan);">
+          <i class="fas fa-search"></i>
+        </span>
+      </form>
+      <!-- Search form -->
+    </div>
+    <!-- Collapsible wrapper -->
+
+    <!-- Botoes de Ação -->
+    <div class="d-flex align-items-center action-buttons">
+      <!-- Planos -->
+      <button type="button" class="btn btn-rounded me-3 neon-glow-cyan" data-mdb-ripple-init style="background: var(--accent-cyan); color: var(--on-accent-cyan);">Planos</button>
+  
+      <!-- Login and Register buttons -->
+      <button type="button" class="btn btn-rounded me-3 neon-glow-primary" data-mdb-ripple-init style="background: var(--primary); color: var(--on-primary);">Login</button>
+      <button type="button" class="btn btn-rounded me-3 neon-glow-magenta" data-mdb-ripple-init style="background: var(--accent-magenta); color: var(--on-accent-magenta);">Criar Conta</button>
+    </div>
+
+    <!-- Right elements -->
+    <div class="d-flex align-items-center">
+
+      <!-- Notifications -->
+      <div class="dropdown notifications-dropdown">
+        <a
+          data-mdb-dropdown-init
+          class="text-reset me-3 dropdown-toggle hidden-arrow"
+          href="#"
+          id="navbarDropdownMenuLink"
+          role="button"
+          aria-expanded="false"
+          style="color: var(--accent-cyan);"
+        >
+          <i class="fas fa-bell"></i>
+          <span class="badge rounded-pill badge-notification" style="background: var(--accent-magenta);">1</span>
+        </a>
+        <ul
+          class="dropdown-menu dropdown-menu-end"
+          aria-labelledby="navbarDropdownMenuLink"
+          style="background: var(--surface-l5);"
+        >
+          <li>
+            <a class="dropdown-item" href="#" style="color: var(--content-primary);">Some news</a>
+          </li>
+          <li>
+            <a class="dropdown-item" href="#" style="color: var(--content-primary);">Another news</a>
+          </li>
+          <li>
+            <a class="dropdown-item" href="#" style="color: var(--content-primary);">Something else here</a>
+          </li>
+        </ul>
+      </div>
+      <!-- Avatar -->
+      <div class="dropdown avatar-dropdown">
+        <a
+          data-mdb-dropdown-init
+          class="dropdown-toggle d-flex align-items-center hidden-arrow"
+          href="#"
+          id="navbarDropdownMenuAvatar"
+          role="button"
+          aria-expanded="false"
+        >
+          <img
+            src="https://mdbcdn.b-cdn.net/img/new/avatars/2.webp"
+            class="rounded-circle"
+            height="25"
+            alt="Visitante"
+            loading="lazy"
+            style="border: 2px solid var(--primary);"
+          />
+        </a>
+        <ul
+          class="dropdown-menu dropdown-menu-end"
+          aria-labelledby="navbarDropdownMenuAvatar"
+          style="background: var(--surface-l5);"
+        >
+          <li>
+            <button id="profileButton" class="dropdown-item btn btn-link" type="button" style="color: var(--content-primary); text-align: left;">My profile</button>
+          </li>
+          <li>
+            <button id="settingsButton" class="dropdown-item btn btn-link" type="button" style="color: var(--content-primary); text-align: left;">Settings</button>
+          </li>
+          <li>
+            <button id="logoutButton" class="dropdown-item btn btn-link" type="button" style="color: var(--content-primary); text-align: left;">Logout</button>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <!-- Right elements -->
+  </div>
+  <!-- Container wrapper -->
+</nav>
+<!-- Navbar -->
