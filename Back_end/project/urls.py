@@ -23,7 +23,7 @@ from drf_yasg import openapi
 from rest_framework.authtoken.views import obtain_auth_token
 from django.views.generic import RedirectView
 
-from users.views import CustomUserViewSet, UserProfileViewSet, CustomObtainAuthToken, UserSignupView
+from users.views import CustomUserViewSet, UserProfileViewSet, CustomObtainAuthToken, UserSignupView, CurrentUserView, ApiRootView
 from conteudo.views import FilmeViewSet, SerieViewSet, TemporadaViewSet, EpisodioViewSet, GeneroViewSet, PessoaViewSet, CreditoMidiaViewSet
 from interactions.views import ItemListaInteresseViewSet, HistoricoVisualizacaoViewSet, AvaliacaoViewSet
 from subscriptions.views import PlanoAssinaturaViewSet, AssinaturaUsuarioViewSet
@@ -60,11 +60,12 @@ schema_view = get_schema_view(
 
 urlpatterns = [
     path('', RedirectView.as_view(url='/web/', permanent=False)),
-    path('admin/', admin.site.urls),
     path('web/', include('web.urls')),
+    path('admin/', admin.site.urls),
     path('api/', include(router.urls)),
-    path('api/token/', CustomObtainAuthToken.as_view(), name='api_token_auth'),
-    path('api/signup/', UserSignupView.as_view(), name='api_signup'),
+    path('api/user/me/', CurrentUserView.as_view(), name='current_user'),  # Protegida
+    path('api/token/', CustomObtainAuthToken.as_view(), name='api_token_auth'),  # Pública
+    path('api/signup/', UserSignupView.as_view(), name='api_signup'),  # Pública
     path('swagger/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
     path('redoc/', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
 ]

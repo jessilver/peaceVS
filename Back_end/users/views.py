@@ -9,6 +9,7 @@ from rest_framework import status
 from rest_framework import generics
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework import permissions
+from rest_framework.views import APIView
 
 # Create your views here.
 
@@ -54,3 +55,31 @@ class UserSignupView(generics.CreateAPIView):
     queryset = CustomUser.objects.all()
     serializer_class = CustomUserSignupSerializer
     permission_classes = [AllowAny]
+
+class CurrentUserView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        user = request.user
+        data = {
+            'id': user.id,
+            'email': user.email,
+            'first_name': user.first_name,
+            'last_name': user.last_name,
+            'is_active': user.is_active,
+            'is_superuser': user.is_superuser,
+            'is_staff': user.is_staff,
+        }
+        return Response(data)
+
+class ApiRootView(APIView):
+    permission_classes = [AllowAny]
+
+    def get(self, request):
+        return Response({
+            'login': '/api/token/',
+            'signup': '/api/signup/',
+            'user_me': '/api/user/me/',
+            'docs_swagger': '/swagger/',
+            'docs_redoc': '/redoc/'
+        })
