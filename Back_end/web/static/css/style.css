@@ -33,6 +33,10 @@
   --on-semantic-info: #FFFFFF;
 }
 
+body {
+  font-family: 'Poppins', sans-serif;
+}
+
 .input-group.neon-search {
   background: var(--surface-l5);
   border: 1.5px solid transparent;
@@ -112,9 +116,11 @@
   position: relative;
   z-index: 0;
 }
+
 #intro.bg-image img, #intro.bg-image::before, #intro.bg-image::after {
   z-index: 0 !important;
 }
+
 #intro .container, #intro .mask {
   position: relative;
   z-index: 1;
