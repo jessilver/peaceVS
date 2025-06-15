@@ -1,0 +1,50 @@
+{% extends "layouts/_base.html" %}
+
+{% block content %}
+<!-- Background image -->
+<div id="intro" class="bg-image shadow-2-strong">
+    <div class="mask d-flex align-items-center h-100" style="background-color: rgba(0, 0, 0, 0.8);">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-xl-5 col-md-8">
+                    <form id="loginForm" class="rounded shadow-5-strong p-5" style="background: var(--surface-l2); color: var(--content-primary);">
+                    <!-- Email input -->
+                    <div class="form-outline mb-4" data-mdb-input-init>
+                        <input type="email" id="formEmail" class="form-control" style="background: var(--surface-l1); color: var(--content-primary);" required />
+                        <label class="form-label" for="formEmail" style="color: var(--content-secondary);">Email address</label>
+                    </div>
+
+                    <!-- Password input -->
+                    <div class="form-outline mb-4" data-mdb-input-init>
+                        <input type="password" id="formPassword" class="form-control" style="background: var(--surface-l1); color: var(--content-primary);" required />
+                        <label class="form-label" for="formPassword" style="color: var(--content-secondary);">Password</label>
+                    </div>
+
+                    <!-- 2 column grid layout for inline styling -->
+                    <div class="row mb-4">
+                        <div class="col d-flex justify-content-center">
+                        <!-- Checkbox -->
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="" id="formRemember" checked style="background: var(--surface-l3); border-color: var(--primary);" />
+                            <label class="form-check-label" for="formRemember" style="color: var(--content-secondary);">
+                            Remember me
+                            </label>
+                        </div>
+                        </div>
+
+                        <div class="col text-center">
+                        <!-- Simple link -->
+                        <a href="#" style="color: var(--accent-cyan);">Forgot password?</a>
+                        </div>
+                    </div>
+
+                    <!-- Submit button -->
+                    <button type="submit" class="btn btn-rounded neon-glow-primary btn-block w-100" data-mdb-ripple-init style="background: var(--primary); color: var(--on-primary);">Sign in</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Background image -->
+{% endblock %}

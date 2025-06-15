@@ -57,11 +57,11 @@
     <!-- Botoes de Ação -->
     <div class="d-flex align-items-center action-buttons">
       <!-- Planos -->
-      <button type="button" class="btn btn-rounded me-3 neon-glow-cyan" data-mdb-ripple-init style="background: var(--accent-cyan); color: var(--on-accent-cyan);">Planos</button>
-  
+      <a href="#" class="btn btn-rounded me-3 neon-glow-cyan" data-mdb-ripple-init style="background: var(--accent-cyan); color: var(--on-accent-cyan);">Planos</a>
+      
       <!-- Login and Register buttons -->
-      <button type="button" class="btn btn-rounded me-3 neon-glow-primary" data-mdb-ripple-init style="background: var(--primary); color: var(--on-primary);">Login</button>
-      <button type="button" class="btn btn-rounded me-3 neon-glow-magenta" data-mdb-ripple-init style="background: var(--accent-magenta); color: var(--on-accent-magenta);">Criar Conta</button>
+      <a href="{% url 'web_login' %}" class="btn btn-rounded me-3 neon-glow-primary" data-mdb-ripple-init style="background: var(--primary); color: var(--on-primary);">Login</a>
+      <a href="{% url 'web_signup' %}" class="btn btn-rounded me-3 neon-glow-magenta" data-mdb-ripple-init style="background: var(--accent-magenta); color: var(--on-accent-magenta);">Criar Conta</a>
     </div>
 
     <!-- Right elements -->
