@@ -1,5 +1,8 @@
 from django.test import TestCase
 from .models import Filme, Serie, Temporada, Episodio, Genero, Pessoa, CreditoMidia
+from django.urls import reverse
+from rest_framework.test import APITestCase
+from rest_framework import status
 
 class GeneroModelTest(TestCase):
     def test_create_genero(self):
@@ -80,3 +83,39 @@ class CreditoMidiaModelTest(TestCase):
         self.assertEqual(credito.pessoa, self.pessoa)
         self.assertEqual(credito.filme, self.filme)
         self.assertEqual(credito.tipo_credito, 'ATOR')
+
+class FilmeAPITests(APITestCase):
+    def setUp(self):
+        self.genero = Genero.objects.create(nome='Ação', slug='acao')
+        self.filme = Filme.objects.create(
+            titulo='Filme API', sinopse='Sinopse', ano_lancamento=2022, duracao_minutos=100,
+            arquivo_video_url='http://video.com/filmeapi.mp4', slug='filme-api', ativo=True
+        )
+        self.filme.generos.add(self.genero)
+
+    def test_list_filmes(self):
+        url = reverse('filme-list')
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertGreaterEqual(len(response.data), 1)
+
+    def test_retrieve_filme(self):
+        url = reverse('filme-detail', args=[self.filme.id])
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(response.data['titulo'], 'Filme API')
+
+    def test_create_filme_unauthenticated(self):
+        url = reverse('filme-list')
+        data = {
+            'titulo': 'Novo Filme',
+            'sinopse': 'Nova sinopse',
+            'ano_lancamento': 2023,
+            'duracao_minutos': 120,
+            'arquivo_video_url': 'http://video.com/novo.mp4',
+            'slug': 'novo-filme',
+            'ativo': True,
+            'generos': [self.genero.id]
+        }
+        response = self.client.post(url, data)
+        self.assertIn(response.status_code, [status.HTTP_401_UNAUTHORIZED, status.HTTP_403_FORBIDDEN])
