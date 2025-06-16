@@ -2,7 +2,30 @@
 
 <ion-content [fullscreen]="true">
   <div id="container">
-    <strong>Ready to create an app?</strong>
-    <p>Start with Ionic <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
+    <ng-container *ngFor="let grupo of filmesPorGenero">
+      <div *ngIf="grupo.filmes.length > 0" class="genero-section">
+        <h2>{{ grupo.genero }}</h2>
+        <div class="carrossel-filmes">
+          <div class="filme-card" *ngFor="let filme of grupo.filmes" (click)="selecionarFilme(filme)">
+            <img [src]="filme.poster_url" alt="Poster" />
+          </div>
+        </div>
+      </div>
+    </ng-container>
+    <div *ngIf="isAllEmpty()">
+      <p>Nenhum filme encontrado para os gêneros selecionados.</p>
+    </div>
+    <!-- Modal/Card de detalhes do filme -->
+    <div class="detalhes-modal" *ngIf="filmeSelecionado">
+      <div class="detalhes-card">
+        <button class="fechar" (click)="fecharDetalhes()">&times;</button>
+        <img [src]="filmeSelecionado.poster_url" alt="Poster" />
+        <h2>{{ filmeSelecionado.title }}</h2>
+        <p>{{ filmeSelecionado.overview }}</p>
+        <p *ngIf="filmeSelecionado.release_date"><strong>Lançamento:</strong> {{ filmeSelecionado.release_date }}</p>
+        <p *ngIf="filmeSelecionado.generos"><strong>Gêneros:</strong> {{ filmeSelecionado.generos.join(', ') }}</p>
+      </div>
+      <div class="modal-backdrop" (click)="fecharDetalhes()"></div>
+    </div>
   </div>
 </ion-content>
