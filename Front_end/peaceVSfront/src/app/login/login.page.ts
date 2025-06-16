@@ -23,7 +23,7 @@ export class LoginPage {
       next: (res) => {
         if (res.token) {
           this.authService.setToken(res.token);
-          console.log('Login bem-sucedido');
+          window.location.href = '/home';
         }
       },
       error: () => {
