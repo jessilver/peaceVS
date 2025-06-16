@@ -3,30 +3,19 @@ from web.services import get_movies_by_category
 
 def home(request):
     category_map = {
-        'populares': 'Populares',
-        'em_cartaz': 'Em Cartaz',
-        'melhores_avaliados': 'Melhores Avaliados',
-        'em_breve': 'Em Breve',
+        'Populares',
+        'Em Cartaz',
+        'Melhores Avaliados',
+        'Em Breve',
     }
 
-    categorias = [
-        {
-            'name': 'Populares',
-            'movie': get_movies_by_category(category_map['populares']),
-        }, 
-        {
-            'name': 'Em Cartaz',
-            'movie': get_movies_by_category(category_map['em_cartaz']),
-        }, 
-        {
-            'name': 'Melhores Avaliados',
-            'movie': get_movies_by_category(category_map['melhores_avaliados']),
-        }, 
-        {
-            'name': 'Em Breve',
-            'movie': get_movies_by_category(category_map['em_breve']),
-        }
-    ]
+    categorias = []
+
+    for name in category_map:
+        categorias.append({
+            'name': name,
+            'movie': get_movies_by_category(name),
+        })
 
     return render(request, 'web/home.html', {'categorias': categorias})
 
@@ -36,4 +25,20 @@ def login(request):
 def signup(request):
     return render(request, 'web/signup.html')
 
-# Create your views here.
+def filmes(request):
+    category_map = {
+        'Populares',
+        'Em Cartaz',
+        'Melhores Avaliados',
+        'Em Breve',
+    }
+
+    categorias = []
+
+    for name in category_map:
+        categorias.append({
+            'name': name,
+            'movie': get_movies_by_category(name),
+        })
+
+    return render(request, 'web/filmes.html', {'categorias': categorias})
