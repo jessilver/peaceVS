@@ -35,3 +35,50 @@
 /* @import "@ionic/angular/css/palettes/dark.always.css"; */
 /* @import "@ionic/angular/css/palettes/dark.class.css"; */
 @import '@ionic/angular/css/palettes/dark.system.css';
+
+:root {
+  /* Fundos e Superfícies */
+  --background-base: #121212;
+  --surface-l1: #1E1E1E;
+  --surface-l2: #232323;
+  --surface-l3: #272727;
+  --surface-l4: #2C2C2C;
+  --surface-l5: #383838;
+
+  /* Conteúdo */
+  --content-primary: #E4E4E4;
+  --content-secondary: rgba(228, 228, 228, 0.7);
+  --content-disabled: rgba(228, 228, 228, 0.4);
+
+  /* Cores Interativas */
+  --primary: #A56EFF;
+  --on-primary: #000000;
+  --accent-cyan: #2AEEFF;
+  --on-accent-cyan: #000000;
+  --accent-magenta: #C71585;
+  --on-accent-magenta: #FFFFFF;
+
+  /* Cores Semânticas */
+  --semantic-success: #00E676;
+  --on-semantic-success: #000000;
+  --semantic-warning: #FFEA00;
+  --on-semantic-warning: #000000;
+  --semantic-error: #FF1744;
+  --on-semantic-error: #FFFFFF;
+  --semantic-info: #2979FF;
+  --on-semantic-info: #FFFFFF;
+
+  /* Ionic Theme Overrides */
+  --ion-background-color: var(--background-base);
+  --ion-text-color: var(--content-primary);
+  --ion-color-primary: var(--primary);
+  --ion-color-primary-contrast: var(--on-primary);
+  --ion-color-secondary: var(--accent-cyan);
+  --ion-color-secondary-contrast: var(--on-accent-cyan);
+}
+
+body {
+  font-family: 'Poppins', sans-serif;
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap');
