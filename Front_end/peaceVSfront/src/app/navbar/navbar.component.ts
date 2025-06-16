@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { IonHeader, IonToolbar, IonTitle, IonButtons, IonButton, IonIcon } from '@ionic/angular/standalone';
+import { personCircleOutline } from 'ionicons/icons';
+import { addIcons } from 'ionicons';
 
 @Component({
   selector: 'app-navbar',
@@ -8,10 +10,10 @@ import { IonHeader, IonToolbar, IonTitle, IonButtons, IonButton, IonIcon } from 
   standalone: true,
   imports: [IonHeader, IonToolbar, IonTitle, IonButtons, IonButton, IonIcon],
 })
-export class NavbarComponent  implements OnInit {
-
-  constructor() { }
+export class NavbarComponent implements OnInit {
+  constructor() {
+    addIcons({ personCircleOutline });
+  }
 
   ngOnInit() {}
-
 }
