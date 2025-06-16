@@ -30,6 +30,8 @@ class UserProfileViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticated]
 
     def get_queryset(self):
+        if getattr(self, 'swagger_fake_view', False):
+            return self.queryset.none()
         # Só permite que o usuário veja/edite seus próprios perfis
         user = self.request.user
         if user.is_superuser:
