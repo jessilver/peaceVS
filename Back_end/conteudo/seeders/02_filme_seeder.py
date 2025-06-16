@@ -1,6 +1,8 @@
 from jessilver_django_seed.seeders.BaseSeeder import BaseSeeder
 from conteudo.models import Filme, Genero
-from django.utils.timezone import now
+from django.utils.text import slugify
+import requests
+import os
 
 class FilmeSeeder(BaseSeeder):
     @property
@@ -8,21 +10,58 @@ class FilmeSeeder(BaseSeeder):
         return 'FilmeSeeder'
 
     def seed(self):
-        genero = Genero.objects.first()
-        if not genero:
-            self.error('Nenhum gênero encontrado. Rode o seeder de gênero antes.')
+        api_key = os.getenv('TMDB_API_KEY')
+        if not api_key:
+            self.error('TMDB_API_KEY não definidas no ambiente.')
             return
-        filme, created = Filme.objects.get_or_create(
-            titulo='Filme Exemplo',
-            sinopse='Um filme de exemplo.',
-            ano_lancamento=2024,
-            duracao_minutos=120,
-            arquivo_video_url='http://video.com/filme.mp4',
-            slug='filme-exemplo',
-            ativo=True
-        )
-        if created:
-            filme.generos.add(genero)
-            self.succes('Filme Exemplo criado')
-        else:
-            self.error('Filme Exemplo já existe')
+        categorias = [
+            ('Populares', 'popular'),
+            ('Em Cartaz', 'now_playing'),
+            ('Melhores Avaliados', 'top_rated'),
+            ('Em Breve', 'upcoming'),
+        ]
+        for nome_categoria, endpoint in categorias:
+            genero_categoria = Genero.objects.filter(nome=nome_categoria).first()
+            if not genero_categoria:
+                self.error(f"Gênero '{nome_categoria}' não encontrado. Rode o seeder de gênero antes.")
+                continue
+            url = f'https://api.themoviedb.org/3/movie/{endpoint}?api_key={api_key}&language=pt-BR&page=1'
+            try:
+                response = requests.get(url)
+                response.raise_for_status()
+                data = response.json()
+                filmes = data.get('results', [])
+                for movie in filmes:
+                    titulo = movie.get('title')
+                    sinopse = movie.get('overview') or ''
+                    ano = int(movie.get('release_date', '2000')[:4]) if movie.get('release_date') else 2000
+                    poster_path = movie.get('poster_path')
+                    poster_url = f"https://image.tmdb.org/t/p/w500{poster_path}" if poster_path else ''
+                    slug = slugify(titulo)
+                    filme, created = Filme.objects.get_or_create(
+                        titulo=titulo,
+                        defaults={
+                            'sinopse': sinopse,
+                            'ano_lancamento': ano,
+                            'imagem_poster_url': poster_url,
+                            'duracao_minutos': 120,  # valor fictício
+                            'arquivo_video_url': '',  # não disponível
+                            'slug': slug,
+                            'ativo': True
+                        }
+                    )
+                    if created:
+                        # Associa gêneros do TMDb
+                        for genero_id in movie.get('genre_ids', []):
+                            genero = Genero.objects.filter(id=genero_id).first()
+                            if genero:
+                                filme.generos.add(genero)
+                        # Associa também ao gênero da categoria
+                        filme.generos.add(genero_categoria)
+                        self.succes(f'Filme {titulo} criado e associado a {nome_categoria}')
+                    else:
+                        # Garante associação à categoria mesmo se já existir
+                        filme.generos.add(genero_categoria)
+                        self.error(f'Filme {titulo} já existe, mas foi associado a {nome_categoria}')
+            except Exception as e:
+                self.error(f'Erro ao buscar filmes do TMDb para {nome_categoria}: {e}')
