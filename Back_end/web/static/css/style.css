@@ -130,3 +130,127 @@ body {
     position: relative;
     z-index: 10;
 }
+
+.carousel-inner-wrapper {
+    overflow: hidden;
+    width: 100%;
+    position: relative;
+}
+
+.carousel-inner {
+    transition: none !important;
+    transform: none !important;
+}
+
+.card-wrapper {
+    display: flex;
+    transition: transform 0.5s ease;
+}
+
+.no-transition {
+    transition: none !important;
+}
+
+.carousel-card {
+    flex: 0 0 auto;
+    width: 16.666%;
+    padding: 0 5px;
+    box-sizing: border-box;
+    transition: transform 0.3s ease;
+    position: relative;
+}
+
+.carousel-control-prev,
+.carousel-control-next {
+    background-color: rgba(0, 0, 0, 0.3);
+    width: 5%;
+    height: 100px;
+    top: 50%;
+    transform: translateY(-50%);
+    border-radius: 5px;
+    z-index: 10;
+    position: absolute;
+}
+
+.carousel-control-prev { left: 0; }
+
+.carousel-control-next { right: 0; }
+
+@media (max-width: 992px) {
+    .carousel-card { width: 33.333%; }
+}
+
+@media (max-width: 576px) {
+    .carousel-card { width: 50%; }
+}
+
+.card-content-wrapper {
+    position: relative;
+    overflow: hidden;
+    border-radius: 8px;
+    width: 100%;
+    aspect-ratio: 2 / 3;
+    background-color: #222;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+    transition: box-shadow 0.3s ease;
+}
+
+.card-content-wrapper .card-img-top {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+}
+
+.carousel-card:hover .card-content-wrapper {
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.8);
+}
+
+.card-hover-info {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.75);
+    opacity: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 15px;
+    color: white;
+    transition: opacity 0.3s ease;
+}
+
+.carousel-card:hover .card-hover-info {
+    opacity: 1;
+}
+
+.hover-title {
+    font-size: 1.1rem;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.hover-description {
+    font-size: 0.8rem;
+    margin-bottom: 10px;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.hover-buttons {
+    display: flex;
+    gap: 10px;
+}
+
+.carousel-inner-wrapper.is-hovering {
+    overflow: visible;
+}
+
+.container-fluid.my-5 {
+    padding-top: 40px;
+    padding-bottom: 40px;
+}

@@ -2,64 +2,42 @@
 {% load static %}
 
 {% block content %}
-<div class="container-fluid mt-4">
-    <h3 class="mb-3" style="color: var(--content-primary);">Mais Visto do Dia</h3>
-    <div class="carousel-wrapper position-relative">
-        <button class="carousel-btn carousel-btn-left" id="carouselLeft">&#8249;</button>
-        <div class="carousel-cards d-flex flex-row overflow-auto" id="carouselCards" style="padding-right:120px;">
-            <!-- Exemplo de card com imagem de pôster e título -->
-            <div class="carousel-card mx-2 d-flex flex-column align-items-center justify-content-end position-relative"
-                style="min-width:220px; max-width:220px; height:320px; border-radius:18px; box-shadow:0 0 16px 0 #0008; overflow:hidden; background:#222;">
-                <img src="https://m.media-amazon.com/images/I/81p+xe8cbnL._AC_SY679_.jpg" alt="Guerreiros do Sol" style="width:100%; height:100%; object-fit:cover; position:absolute; top:0; left:0; z-index:1;">
-                <div class="carousel-title text-center w-100 position-absolute bottom-0 start-0 end-0 px-2 py-2" style="background:rgba(0,0,0,0.7); color:#fff; z-index:2; font-weight:bold; border-bottom-left-radius:18px; border-bottom-right-radius:18px;">GUERREIROS DO SOL</div>
+<div class="container-fluid my-5">
+    {% for categoria in categorias %}
+        <h3 class="mb-3 mt-5">{{ categoria.name }}</h3>
+        <div id="carrossel-{{ categoria.name|slugify }}" class="carousel slide">
+            <div class="carousel-inner-wrapper">
+                <div class="carousel-inner" role="listbox">
+                    <div class="carousel-item active">
+                        <div class="card-wrapper d-flex">
+                            {% for movie in categoria.movie %}
+                            <div class="carousel-card">
+                                <div class="card-content-wrapper">
+                                    <img src="{{ movie.poster_url }}" class="card-img-top" alt="{{ movie.title }}">
+                                    <div class="card-hover-info">
+                                        <h5 class="hover-title">{{ movie.title }}</h5>
+                                        <p class="hover-description">{{ movie.overview|default:"Sem descrição." }}</p>
+                                        <div class="hover-buttons">
+                                            <a href="#" class="btn btn-danger btn-sm">▶ Assistir</a>
+                                            <a href="#" class="btn btn-outline-light btn-sm">+</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="carousel-card mx-2 d-flex flex-column align-items-center justify-content-end position-relative"
-                style="min-width:220px; max-width:220px; height:320px; border-radius:18px; box-shadow:0 0 16px 0 #0008; overflow:hidden; background:#222;">
-                <img src="https://m.media-amazon.com/images/I/91KkWf50SoL._AC_SY679_.jpg" alt="The Walking Dead" style="width:100%; height:100%; object-fit:cover; position:absolute; top:0; left:0; z-index:1;">
-                <div class="carousel-title text-center w-100 position-absolute bottom-0 start-0 end-0 px-2 py-2" style="background:rgba(0,0,0,0.7); color:#fff; z-index:2; font-weight:bold; border-bottom-left-radius:18px; border-bottom-right-radius:18px;">THE WALKING DEAD</div>
-            </div>
-            <div class="carousel-card mx-2 d-flex flex-column align-items-center justify-content-end position-relative"
-                style="min-width:220px; max-width:220px; height:320px; border-radius:18px; box-shadow:0 0 16px 0 #0008; overflow:hidden; background:#222;">
-                <img src="https://m.media-amazon.com/images/I/71niXI3lxlL._AC_SY679_.jpg" alt="K.O." style="width:100%; height:100%; object-fit:cover; position:absolute; top:0; left:0; z-index:1;">
-                <div class="carousel-title text-center w-100 position-absolute bottom-0 start-0 end-0 px-2 py-2" style="background:rgba(0,0,0,0.7); color:#fff; z-index:2; font-weight:bold; border-bottom-left-radius:18px; border-bottom-right-radius:18px;">K.O.</div>
-            </div>
-            <div class="carousel-card mx-2 d-flex flex-column align-items-center justify-content-end position-relative"
-                style="min-width:220px; max-width:220px; height:320px; border-radius:18px; box-shadow:0 0 16px 0 #0008; overflow:hidden; background:#222;">
-                <img src="https://m.media-amazon.com/images/I/81VwqQ2K1GL._AC_SY679_.jpg" alt="Aniela" style="width:100%; height:100%; object-fit:cover; position:absolute; top:0; left:0; z-index:1;">
-                <div class="carousel-title text-center w-100 position-absolute bottom-0 start-0 end-0 px-2 py-2" style="background:rgba(0,0,0,0.7); color:#fff; z-index:2; font-weight:bold; border-bottom-left-radius:18px; border-bottom-right-radius:18px;">AN!ELA</div>
-            </div>
-            <div class="carousel-card mx-2 d-flex flex-column align-items-center justify-content-end position-relative"
-                style="min-width:220px; max-width:220px; height:320px; border-radius:18px; box-shadow:0 0 16px 0 #0008; overflow:hidden; background:#222;">
-                <img src="https://m.media-amazon.com/images/I/91z5KuonXrL._AC_SY679_.jpg" alt="Mercy for None" style="width:100%; height:100%; object-fit:cover; position:absolute; top:0; left:0; z-index:1;">
-                <div class="carousel-title text-center w-100 position-absolute bottom-0 start-0 end-0 px-2 py-2" style="background:rgba(0,0,0,0.7); color:#fff; z-index:2; font-weight:bold; border-bottom-left-radius:18px; border-bottom-right-radius:18px;">MERCY FOR NONE</div>
-            </div>
-            <div class="carousel-card mx-2 d-flex flex-column align-items-center justify-content-end position-relative"
-                style="min-width:220px; max-width:220px; height:320px; border-radius:18px; box-shadow:0 0 16px 0 #0008; overflow:hidden; background:#222;">
-                <img src="https://m.media-amazon.com/images/I/81Q1b1wQJGL._AC_SY679_.jpg" alt="Maldosas" style="width:100%; height:100%; object-fit:cover; position:absolute; top:0; left:0; z-index:1;">
-                <div class="carousel-title text-center w-100 position-absolute bottom-0 start-0 end-0 px-2 py-2" style="background:rgba(0,0,0,0.7); color:#fff; z-index:2; font-weight:bold; border-bottom-left-radius:18px; border-bottom-right-radius:18px;">MALDOSAS</div>
-            </div>
-            <div class="carousel-card mx-2 d-flex flex-column align-items-center justify-content-end position-relative"
-                style="min-width:220px; max-width:220px; height:320px; border-radius:18px; box-shadow:0 0 16px 0 #0008; overflow:hidden; background:#222;">
-                <img src="https://m.media-amazon.com/images/I/81p+xe8cbnL._AC_SY679_.jpg" alt="The Survivor" style="width:100%; height:100%; object-fit:cover; position:absolute; top:0; left:0; z-index:1;">
-                <div class="carousel-title text-center w-100 position-absolute bottom-0 start-0 end-0 px-2 py-2" style="background:rgba(0,0,0,0.7); color:#fff; z-index:2; font-weight:bold; border-bottom-left-radius:18px; border-bottom-right-radius:18px;">THE SURVIVOR</div>
-            </div>
-            <div class="carousel-card mx-2 d-flex flex-column align-items-center justify-content-end position-relative"
-                style="min-width:220px; max-width:220px; height:320px; border-radius:18px; box-shadow:0 0 16px 0 #0008; overflow:hidden; background:#222;">
-                <img src="https://m.media-amazon.com/images/I/91z5KuonXrL._AC_SY679_.jpg" alt="Mercy for None" style="width:100%; height:100%; object-fit:cover; position:absolute; top:0; left:0; z-index:1;">
-                <div class="carousel-title text-center w-100 position-absolute bottom-0 start-0 end-0 px-2 py-2" style="background:rgba(0,0,0,0.7); color:#fff; z-index:2; font-weight:bold; border-bottom-left-radius:18px; border-bottom-right-radius:18px;">MERCY FOR NONE</div>
-            </div>
-            <div class="carousel-card mx-2 d-flex flex-column align-items-center justify-content-end position-relative"
-                style="min-width:220px; max-width:220px; height:320px; border-radius:18px; box-shadow:0 0 16px 0 #0008; overflow:hidden; background:#222;">
-                <img src="https://m.media-amazon.com/images/I/81Q1b1wQJGL._AC_SY679_.jpg" alt="Maldosas" style="width:100%; height:100%; object-fit:cover; position:absolute; top:0; left:0; z-index:1;">
-                <div class="carousel-title text-center w-100 position-absolute bottom-0 start-0 end-0 px-2 py-2" style="background:rgba(0,0,0,0.7); color:#fff; z-index:2; font-weight:bold; border-bottom-left-radius:18px; border-bottom-right-radius:18px;">MALDOSAS</div>
-            </div>
-            <div class="carousel-card mx-2 d-flex flex-column align-items-center justify-content-end position-relative"
-                style="min-width:220px; max-width:220px; height:320px; border-radius:18px; box-shadow:0 0 16px 0 #0008; overflow:hidden; background:#222;">
-                <img src="https://m.media-amazon.com/images/I/81p+xe8cbnL._AC_SY679_.jpg" alt="The Survivor" style="width:100%; height:100%; object-fit:cover; position:absolute; top:0; left:0; z-index:1;">
-                <div class="carousel-title text-center w-100 position-absolute bottom-0 start-0 end-0 px-2 py-2" style="background:rgba(0,0,0,0.7); color:#fff; z-index:2; font-weight:bold; border-bottom-left-radius:18px; border-bottom-right-radius:18px;">THE SURVIVOR</div>
-            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#carrossel-{{ categoria.name|slugify }}">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Anterior</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carrossel-{{ categoria.name|slugify }}">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Próximo</span>
+            </button>
         </div>
-        <button class="carousel-btn carousel-btn-right" id="carouselRight">&#8250;</button>
-    </div>
+    {% endfor %}
 </div>
 {% endblock %}
