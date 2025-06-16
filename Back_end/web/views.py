@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from web.services import get_movies_by_category
+from conteudo.models import Genero
 
 def home(request):
     category_map = {
@@ -26,12 +27,7 @@ def signup(request):
     return render(request, 'web/signup.html')
 
 def filmes(request):
-    category_map = {
-        'Populares',
-        'Em Cartaz',
-        'Melhores Avaliados',
-        'Em Breve',
-    }
+    category_map = Genero.objects.values_list('nome', flat=True)
 
     categorias = []
 
@@ -41,4 +37,4 @@ def filmes(request):
             'movie': get_movies_by_category(name),
         })
 
-    return render(request, 'web/filmes.html', {'categorias': categorias})
+    return render(request, 'web/home.html', {'categorias': categorias})
