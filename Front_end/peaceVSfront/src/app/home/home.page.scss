@@ -1,11 +1,12 @@
 #container {
-  text-align: center;
+  text-align: left;
 
-  position: absolute;
+  position: relative;
   left: 0;
   right: 0;
-  top: 50%;
-  transform: translateY(-50%);
+  top: 0;
+  transform: none;
+  padding: 1rem;
 }
 
 #container strong {
@@ -24,4 +25,148 @@
 
 #container a {
   text-decoration: none;
+}
+
+.genero-section {
+  margin-bottom: 2.5rem;
+}
+
+.genero-section h2 {
+  margin: 0 0 0.5rem 0.5rem;
+  font-size: 1.3rem;
+  color: var(--content-primary);
+}
+
+.carrossel-filmes {
+  display: flex;
+  flex-direction: row;
+  overflow-x: auto;
+  gap: 1rem;
+  padding-bottom: 0.5rem;
+  scroll-behavior: smooth;
+}
+
+.filme-card {
+  min-width: 180px;
+  max-width: 200px;
+  height: 270px;
+  background: var(--surface-l3);
+  border-radius: 12px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.32);
+  transition: transform 0.2s, box-shadow 0.2s, border 0.2s;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  padding: 0;
+  overflow: hidden;
+  border: 1.5px solid transparent;
+}
+
+.filme-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 12px;
+  margin: 0;
+  flex: 1 1 auto;
+  display: block;
+  background: var(--surface-l4);
+}
+
+.filme-card:hover {
+  transform: scale(1.07) translateY(-6px);
+  box-shadow: 0 6px 24px var(--primary), 0 2px 18px rgba(0,0,0,0.38);
+  border: 1.5px solid var(--primary);
+  z-index: 2;
+}
+
+.filme-info {
+  text-align: center;
+  background: var(--surface-l4);
+  color: var(--content-primary);
+  padding: 0.5rem 0.2rem;
+  font-size: 1rem;
+  border-bottom-left-radius: 12px;
+  border-bottom-right-radius: 12px;
+}
+
+.filme-info h3 {
+  font-size: 1.08rem;
+  margin: 0.2rem 0 0 0;
+  color: var(--content-primary);
+  font-weight: 500;
+}
+
+.detalhes-modal {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.detalhes-card {
+  background: var(--surface-l3);
+  border-radius: 16px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.32);
+  padding: 2rem 1.5rem 1.5rem 1.5rem;
+  max-width: 350px;
+  width: 90vw;
+  position: relative;
+  z-index: 1001;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  animation: fadeIn .2s;
+}
+.detalhes-card img {
+  width: 180px;
+  height: 270px;
+  object-fit: cover;
+  border-radius: 10px;
+  margin-bottom: 1rem;
+}
+.detalhes-card h2 {
+  margin: 0.5rem 0 0.5rem 0;
+  font-size: 1.3rem;
+  color: var(--content-primary);
+}
+.detalhes-card p {
+  font-size: 1rem;
+  color: var(--content-secondary);
+  margin: 0.2rem 0;
+}
+.detalhes-card .fechar {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.7rem;
+  background: none;
+  border: none;
+  font-size: 2rem;
+  color: var(--content-secondary);
+  cursor: pointer;
+  z-index: 1002;
+}
+.modal-backdrop {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.35);
+  z-index: 1000;
+}
+@keyframes fadeIn {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+@media (max-width: 600px) {
+  .filme-card {
+    min-width: 130px;
+    max-width: 150px;
+    height: 180px;
+  }
+
+  .filme-card img {
+    height: 140px;
+  }
 }

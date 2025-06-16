@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, Observer } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -25,6 +25,56 @@ export class ConteudoService {
   }
   deleteFilme(id: number): Observable<any> {
     return this.http.delete(this.apiBase + 'filmes/' + id + '/');
+  }
+
+  /**
+   * Busca filmes filtrando por gênero (id ou array de ids) e faz o tratamento dos dados para o frontend
+   * @param generoId número | número[]
+   */
+  getFilmesPorGenero(generoId: number | number[]): Observable<any[]> {
+    let param = Array.isArray(generoId) ? generoId.join(',') : generoId;
+    return new Observable(observer => {
+      this.http.get<any[]>(this.apiBase + 'filmes/', { params: { generos: param } }).subscribe({
+        next: (filmes) => {
+          const filmesTratados = (filmes || []).map(filme => ({
+            title: filme.titulo,
+            overview: filme.sinopse,
+            poster_url: filme.imagem_poster_url || 'https://via.placeholder.com/500x750.png?text=No+Image',
+            video_url: filme.arquivo_video_url,
+          }));
+          observer.next(filmesTratados);
+          observer.complete();
+        },
+        error: err => observer.error(err)
+      });
+    });
+  }
+
+  /**
+   * Busca filmes filtrando por nome do gênero (faz 2 requisições: busca id do gênero, depois busca filmes)
+   * @param generoNome string
+   */
+  getFilmesPorNomeGenero(generoNome: string): Observable<any> {
+    return new Observable((observer: Observer<any>) => {
+      this.getGeneros().subscribe({
+        next: generos => {
+          const genero = generos.find((g: any) => g.nome.toLowerCase().includes(generoNome.toLowerCase()));
+          if (!genero) {
+            observer.next([]);
+            observer.complete();
+            return;
+          }
+          this.getFilmesPorGenero(genero.id).subscribe({
+            next: filmes => {
+              observer.next(filmes);
+              observer.complete();
+            },
+            error: err => observer.error(err)
+          });
+        },
+        error: err => observer.error(err)
+      });
+    });
   }
 
   // Séries
