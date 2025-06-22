@@ -4,7 +4,8 @@ from django.conf import settings
 
 from conteudo.models import Filme, Genero
 
-API_URL = getattr(settings, 'API_URL', 'http://192.168.1.140:8000/api/')
+# API_URL = getattr(settings, 'API_URL', 'http://192.168.1.140:8000/api/')
+API_URL = getattr(settings, 'API_URL', 'http://127.0.0.1:8000/api/')
 
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
