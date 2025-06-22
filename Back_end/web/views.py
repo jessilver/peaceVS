@@ -29,8 +29,24 @@ def home(request):
         }
     ]
     # Filtra apenas as categorias que retornaram filmes para não exibir carrosséis vazios.
-    categorias_com_filmes = [cat for cat in categorias if cat['movie'].exists()]
-
+    categorias_com_filmes = []
+    for cat in categorias:
+        filmes = cat['movie']
+        if filmes.exists():
+            filmes_list = [
+                {
+                    'poster_url': getattr(filme, 'imagem_poster_url', ''),
+                    'title': getattr(filme, 'titulo', ''),
+                    'overview': getattr(filme, 'sinopse', ''),
+                }
+                for filme in filmes
+            ]
+            if filmes_list:
+                categorias_com_filmes.append({
+                    'name': cat['name'],
+                    'movie': filmes_list
+                })
+    print(categorias_com_filmes)  # Para depuração, pode ser removido depois
     return render(request, 'web/home.html', {'categorias': categorias_com_filmes})
 
 class LoginView(View):
@@ -44,7 +60,10 @@ class LoginView(View):
 
         if user is not None:
             login(request, user)
-            messages.success(request, f'Bem-vindo de volta, {user.username}!')
+            # Buscar o nome do perfil principal do usuário
+            user_profile = UserProfile.objects.filter(user=user).first()
+            nome_perfil = user_profile.nome_perfil if user_profile else user.email
+            messages.success(request, f'Bem-vindo de volta, {nome_perfil}!')
             return redirect('web_home')
         else:
             messages.error(request, 'Credenciais inválidas. Por favor, tente novamente.')
@@ -112,10 +131,19 @@ def filmes(request):
     for genero in generos_com_filmes:
         # Acessa os filmes do atributo customizado 'filmes_ativos'
         if hasattr(genero, 'filmes_ativos') and genero.filmes_ativos:
-            categorias.append({
-                'name': genero.nome,
-                'movie': genero.filmes_ativos
-            })
+            filmes_list = [
+                {
+                    'poster_url': getattr(filme, 'imagem_poster_url', ''),
+                    'title': getattr(filme, 'titulo', ''),
+                    'overview': getattr(filme, 'sinopse', ''),
+                }
+                for filme in genero.filmes_ativos
+            ]
+            if filmes_list:
+                categorias.append({
+                    'name': genero.nome,
+                    'movie': filmes_list
+                })
 
     # A view 'filmes' reutiliza o template 'home.html', então a estrutura de dados deve ser a mesma.
     return render(request, 'web/home.html', {'categorias': categorias})
