@@ -177,3 +177,8 @@ CORS_ALLOWED_ORIGINS = os.getenv('CORS_ALLOWED_ORIGINS').split(',')
 
 # TMDb API Key
 TMDB_API_KEY = os.getenv('TMDB_API_KEY')
+
+CSRF_TRUSTED_ORIGINS = [
+    "http://localhost:8000",
+    "http://127.0.0.1:8000"
+]

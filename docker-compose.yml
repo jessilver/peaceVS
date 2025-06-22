@@ -20,8 +20,8 @@ services:
     command: gunicorn project.wsgi:application --bind 0.0.0.0:8000
     volumes:
       - ./Back_end:/app
-    ports:
-      - "8000:8000"
+    expose:
+      - "8000"
     environment:
       - DJANGO_DB_ENGINE=django.db.backends.postgresql
       - DJANGO_DB_HOST=postgres
@@ -34,10 +34,21 @@ services:
       - DJANGO_ALLOWED_HOSTS=*
       - CORS_ALLOWED_ORIGINS=http://localhost:8100
       - TMDB_API_KEY=3ba748fba04fb39d4339db10c3f1e1aa
-      
     depends_on:
       postgres:
         condition: service_healthy
+
+  nginx:
+    image: nginx:1.25-alpine
+    container_name: nginx
+    depends_on:
+      - backend
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./Back_end/nginx.conf:/etc/nginx/conf.d/default.conf:ro
+      - ./Back_end/staticfiles_collected:/app/staticfiles_collected:ro
+    restart: unless-stopped
 
 volumes:
   postgres_data:
