@@ -19,6 +19,6 @@ class EpisodioSeeder(BaseSeeder):
             arquivo_video_url='http://video.com/serie1t1e1.mp4'
         )
         if created:
-            self.succes('Episódio 1 criado')
+            self.success('Episódio 1 criado')
         else:
             self.error('Episódio 1 já existe')

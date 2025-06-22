@@ -16,7 +16,7 @@ class PlanoAssinaturaSeeder(BaseSeeder):
             ativo=True
         )
         if created:
-            self.succes('Plano Básico criado')
+            self.success('Plano Básico criado')
         else:
             self.error('Plano Básico já existe')
 
@@ -30,7 +30,7 @@ class PlanoAssinaturaSeeder(BaseSeeder):
             ativo=True
         )
         if created:
-            self.succes('Plano Padrão criado')
+            self.success('Plano Padrão criado')
         else:
             self.error('Plano Padrão já existe')
 
@@ -44,6 +44,6 @@ class PlanoAssinaturaSeeder(BaseSeeder):
             ativo=True
         )
         if created:
-            self.succes('Plano Premium criado')
+            self.success('Plano Premium criado')
         else:
             self.error('Plano Premium já existe')

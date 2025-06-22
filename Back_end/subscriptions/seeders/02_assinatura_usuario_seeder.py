@@ -34,6 +34,6 @@ class AssinaturaUsuarioSeeder(BaseSeeder):
             status_assinatura='ATIVA'
         )
         if created:
-            self.succes('Assinatura criada')
+            self.success('Assinatura criada')
         else:
             self.error('Assinatura já existe para este usuário')

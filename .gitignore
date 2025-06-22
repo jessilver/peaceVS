@@ -17,7 +17,7 @@ __pycache__/
 .DS_Store
 
 # Django static
-staticfiles/
+staticfiles_collected/
 
 # Node/Ionic
 Front_end/node_modules/

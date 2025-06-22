@@ -38,4 +38,4 @@ class GroupsSeeder(BaseSeeder):
         if not admin_created and not mod_created and not support_created and not user_created:
             self.error('Grupos de permissão já existem: Administrador, Moderador, Suporte, Usuário')
         else:
-            self.succes('Grupos de permissão criados e configurados: Administrador, Moderador, Suporte, Usuário')
+            self.success('Grupos de permissão criados e configurados: Administrador, Moderador, Suporte, Usuário')

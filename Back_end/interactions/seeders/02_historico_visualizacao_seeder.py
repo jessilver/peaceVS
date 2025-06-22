@@ -21,6 +21,6 @@ class HistoricoVisualizacaoSeeder(BaseSeeder):
             concluido=False
         )
         if created:
-            self.succes('Histórico de visualização criado')
+            self.success('Histórico de visualização criado')
         else:
             self.error('Histórico de visualização já existe')

@@ -86,7 +86,7 @@ class FilmeSeeder(BaseSeeder):
                                 filme.generos.add(genero)
                         # Associa também ao gênero da categoria
                         filme.generos.add(genero_categoria)
-                        self.succes(f'Filme {titulo} criado e associado a {nome_categoria}')
+                        self.success(f'Filme {titulo} criado e associado a {nome_categoria}')
                     else:
                         # Garante associação à categoria mesmo se já existir
                         filme.generos.add(genero_categoria)

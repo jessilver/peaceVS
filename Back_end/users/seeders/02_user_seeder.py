@@ -21,7 +21,7 @@ class SuperUserSeeder(BaseSeeder):
                 first_name='Super',
                 last_name='User'
             )
-            self.succes('Superuser criado com sucesso')
+            self.success('Superuser criado com sucesso')
         else:
             self.error('Superuser já existe')
 
@@ -45,7 +45,7 @@ class AdminGroupUserSeeder(BaseSeeder):
             )
             group = Group.objects.get(name='Administrador')
             user.groups.add(group)
-            self.succes('Usuário admin de grupo criado e adicionado ao grupo Administrador')
+            self.success('Usuário admin de grupo criado e adicionado ao grupo Administrador')
         else:
             self.error('Usuário admin de grupo já existe')
 
@@ -69,7 +69,7 @@ class ModeratorUserSeeder(BaseSeeder):
             )
             group = Group.objects.get(name='Moderador')
             user.groups.add(group)
-            self.succes('Usuário moderador criado e adicionado ao grupo Moderador')
+            self.success('Usuário moderador criado e adicionado ao grupo Moderador')
         else:
             self.error('Usuário moderador já existe')
 
@@ -93,7 +93,7 @@ class SupportUserSeeder(BaseSeeder):
             )
             group = Group.objects.get(name='Suporte')
             user.groups.add(group)
-            self.succes('Usuário suporte criado e adicionado ao grupo Suporte')
+            self.success('Usuário suporte criado e adicionado ao grupo Suporte')
         else:
             self.error('Usuário suporte já existe')
 
@@ -117,6 +117,6 @@ class NormalUserSeeder(BaseSeeder):
             )
             group = Group.objects.get(name='Usuario')
             user.groups.add(group)
-            self.succes('Usuário comum criado e adicionado ao grupo Usuario')
+            self.success('Usuário comum criado e adicionado ao grupo Usuario')
         else:
             self.error('Usuário comum já existe')

@@ -18,6 +18,6 @@ class TemporadaSeeder(BaseSeeder):
             ano_lancamento=2024
         )
         if created:
-            self.succes('Temporada 1 criada')
+            self.success('Temporada 1 criada')
         else:
             self.error('Temporada 1 já existe')

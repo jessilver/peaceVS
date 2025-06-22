@@ -12,6 +12,6 @@ class PessoaSeeder(BaseSeeder):
             slug='ator-exemplo'
         )
         if created:
-            self.succes('Pessoa Ator Exemplo criada')
+            self.success('Pessoa Ator Exemplo criada')
         else:
             self.error('Pessoa Ator Exemplo já existe')

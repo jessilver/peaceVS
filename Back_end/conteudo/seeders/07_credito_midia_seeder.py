@@ -19,6 +19,6 @@ class CreditoMidiaSeeder(BaseSeeder):
             ordem=1
         )
         if created:
-            self.succes('Crédito de mídia criado')
+            self.success('Crédito de mídia criado')
         else:
             self.error('Crédito de mídia já existe')

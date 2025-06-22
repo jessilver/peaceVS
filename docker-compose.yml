@@ -1,15 +1,43 @@
-version: '3.8'
-
 services:
   postgres:
     image: postgres:latest
     environment:
       POSTGRES_USER: mainuser
       POSTGRES_PASSWORD: 123456789
+      POSTGRES_DB: peacetvs_db
     ports:
       - "5432:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U mainuser"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  backend:
+    build: ./Back_end
+    command: gunicorn project.wsgi:application --bind 0.0.0.0:8000
+    volumes:
+      - ./Back_end:/app
+    ports:
+      - "8000:8000"
+    environment:
+      - DJANGO_DB_ENGINE=django.db.backends.postgresql
+      - DJANGO_DB_HOST=postgres
+      - DJANGO_DB_NAME=peacetvs_db
+      - DJANGO_DB_USER=mainuser
+      - DJANGO_DB_PASSWORD=123456789
+      - DJANGO_DB_PORT=5432
+      - DJANGO_SECRET_KEY=changeme
+      - DJANGO_DEBUG=True
+      - DJANGO_ALLOWED_HOSTS=*
+      - CORS_ALLOWED_ORIGINS=http://localhost:8100
+      - TMDB_API_KEY=3ba748fba04fb39d4339db10c3f1e1aa
+      
+    depends_on:
+      postgres:
+        condition: service_healthy
 
 volumes:
   postgres_data:

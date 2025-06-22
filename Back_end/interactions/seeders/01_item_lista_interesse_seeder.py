@@ -26,6 +26,6 @@ class ItemListaInteresseSeeder(BaseSeeder):
             object_id=filme.id
         )
         if created:
-            self.succes('Item de lista de interesse criado')
+            self.success('Item de lista de interesse criado')
         else:
             self.error('Item de lista de interesse já existe')

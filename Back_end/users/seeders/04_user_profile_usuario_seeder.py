@@ -25,6 +25,6 @@ class UserProfileUsuarioSeeder(BaseSeeder):
                 preferencias_linguagem='pt-BR',
                 eh_perfil_infantil=False
             )
-            self.succes('UserProfile criado para usuário do grupo Usuário')
+            self.success('UserProfile criado para usuário do grupo Usuário')
         else:
             self.error('UserProfile já existe para este usuário')

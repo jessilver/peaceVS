@@ -31,7 +31,7 @@ class GeneroSeeder(BaseSeeder):
                 slug = nome.lower().replace(' ', '-').replace('ç', 'c').replace('ã', 'a').replace('é', 'e')
                 obj, created = Genero.objects.get_or_create(nome=nome, slug=slug)
                 if created:
-                    self.succes(f'Genero {nome} criado')
+                    self.success(f'Genero {nome} criado')
                 else:
                     self.error(f'Genero {nome} já existe')
         except Exception as e:

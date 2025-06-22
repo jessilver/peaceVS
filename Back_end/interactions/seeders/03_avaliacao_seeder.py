@@ -21,6 +21,6 @@ class AvaliacaoSeeder(BaseSeeder):
             comentario_texto='Excelente filme!'
         )
         if created:
-            self.succes('Avaliação criada')
+            self.success('Avaliação criada')
         else:
             self.error('Avaliação já existe')

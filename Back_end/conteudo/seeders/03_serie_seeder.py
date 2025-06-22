@@ -21,6 +21,6 @@ class SerieSeeder(BaseSeeder):
         )
         if created:
             serie.generos.add(genero)
-            self.succes('Série Exemplo criada')
+            self.success('Série Exemplo criada')
         else:
             self.error('Série Exemplo já existe')
