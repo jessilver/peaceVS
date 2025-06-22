@@ -63,6 +63,7 @@ class CurrentUserView(APIView):
 
     def get(self, request):
         user = request.user
+        groups = [group.name for group in user.groups.all()]
         data = {
             'id': user.id,
             'email': user.email,
@@ -71,6 +72,7 @@ class CurrentUserView(APIView):
             'is_active': user.is_active,
             'is_superuser': user.is_superuser,
             'is_staff': user.is_staff,
+            'groups': groups,
         }
         return Response(data)
 

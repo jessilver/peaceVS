@@ -7,16 +7,17 @@
         <div class="container-fluid">
             <div class="row justify-content-center">
                 <div class="col-xl-5 col-md-8">
-                    <form id="loginForm" class="rounded shadow-5-strong p-5" style="background: var(--surface-l2); color: var(--content-primary);">
+                    <form method="post" action="{% url 'web_login' %}" class="rounded shadow-5-strong p-5" style="background: var(--surface-l2); color: var(--content-primary);">
+                    {% csrf_token %}
                     <!-- Email input -->
                     <div class="form-outline mb-4" data-mdb-input-init>
-                        <input type="email" id="formEmail" class="form-control" style="background: var(--surface-l1); color: var(--content-primary);" required />
-                        <label class="form-label" for="formEmail" style="color: var(--content-secondary);">Email address</label>
+                        <input type="text" id="formUsername" name="username" class="form-control" style="background: var(--surface-l1); color: var(--content-primary);" required />
+                        <label class="form-label" for="formUsername" style="color: var(--content-secondary);">Username or Email</label>
                     </div>
 
                     <!-- Password input -->
                     <div class="form-outline mb-4" data-mdb-input-init>
-                        <input type="password" id="formPassword" class="form-control" style="background: var(--surface-l1); color: var(--content-primary);" required />
+                        <input type="password" id="formPassword" name="password" class="form-control" style="background: var(--surface-l1); color: var(--content-primary);" required />
                         <label class="form-label" for="formPassword" style="color: var(--content-secondary);">Password</label>
                     </div>
 

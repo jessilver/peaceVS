@@ -54,16 +54,7 @@
     </div>
     <!-- Collapsible wrapper -->
 
-    <!-- Botoes de Ação -->
-    <div class="d-flex align-items-center action-buttons">
-      <!-- Planos -->
-      <a href="#" class="btn btn-rounded me-3 neon-glow-cyan" data-mdb-ripple-init style="background: var(--accent-cyan); color: var(--on-accent-cyan);">Planos</a>
-      
-      <!-- Login and Register buttons -->
-      <a href="{% url 'web_login' %}" class="btn btn-rounded me-3 neon-glow-primary" data-mdb-ripple-init style="background: var(--primary); color: var(--on-primary);">Login</a>
-      <a href="{% url 'web_signup' %}" class="btn btn-rounded me-3 neon-glow-magenta" data-mdb-ripple-init style="background: var(--accent-magenta); color: var(--on-accent-magenta);">Criar Conta</a>
-    </div>
-
+    {% if user.is_authenticated %}
     <!-- Right elements -->
     <div class="d-flex align-items-center">
 
@@ -111,7 +102,7 @@
             src="https://mdbcdn.b-cdn.net/img/new/avatars/2.webp"
             class="rounded-circle"
             height="25"
-            alt="Visitante"
+            alt="{{ user.userprofile.nome_perfil|default:user.username }}"
             loading="lazy"
             style="border: 2px solid var(--primary);"
           />
@@ -122,18 +113,34 @@
           style="background: var(--surface-l5);"
         >
           <li>
-            <button id="profileButton" class="dropdown-item btn btn-link" type="button" style="color: var(--content-primary); text-align: left;">My profile</button>
+            <a href="#" class="dropdown-item" style="color: var(--content-primary);">Meu Perfil</a>
           </li>
           <li>
-            <button id="settingsButton" class="dropdown-item btn btn-link" type="button" style="color: var(--content-primary); text-align: left;">Settings</button>
+            <a href="#" class="dropdown-item" style="color: var(--content-primary);">Configurações</a>
           </li>
           <li>
-            <button id="logoutButton" class="dropdown-item btn btn-link" type="button" style="color: var(--content-primary); text-align: left;">Logout</button>
+            <form id="logout-form" action="{% url 'web_logout' %}" method="post" style="display: none;">
+                {% csrf_token %}
+            </form>
+            <a href="#" class="dropdown-item" style="color: var(--content-primary);" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                Logout
+            </a>
           </li>
         </ul>
       </div>
     </div>
     <!-- Right elements -->
+    {% else %}
+    <!-- Botoes de Ação -->
+    <div class="d-flex align-items-center action-buttons">
+      <!-- Planos -->
+      <a href="#" class="btn btn-rounded me-3 neon-glow-cyan" data-mdb-ripple-init style="background: var(--accent-cyan); color: var(--on-accent-cyan);">Planos</a>
+      
+      <!-- Login and Register buttons -->
+      <a href="{% url 'web_login' %}" class="btn btn-rounded me-3 neon-glow-primary" data-mdb-ripple-init style="background: var(--primary); color: var(--on-primary);">Login</a>
+      <a href="{% url 'web_signup' %}" class="btn btn-rounded me-3 neon-glow-magenta" data-mdb-ripple-init style="background: var(--accent-magenta); color: var(--on-accent-magenta);">Criar Conta</a>
+    </div>
+    {% endif %}
   </div>
   <!-- Container wrapper -->
 </nav>
