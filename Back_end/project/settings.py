@@ -173,7 +173,13 @@ CORS_ALLOW_HEADERS = [
     'authorization',
     'content-type',
 ]
-CORS_ALLOWED_ORIGINS = os.getenv('CORS_ALLOWED_ORIGINS').split(',')
+
+# Pega a string do .env, ou uma string vazia se não encontrar
+CORS_ALLOWED_ORIGINS_STR = os.getenv('CORS_ALLOWED_ORIGINS', '')
+
+# Converte a string em uma lista, removendo espaços e itens vazios
+CORS_ALLOWED_ORIGINS = [origin.strip() for origin in CORS_ALLOWED_ORIGINS_STR.split(',') if origin.strip()]
+
 
 # TMDb API Key
 TMDB_API_KEY = os.getenv('TMDB_API_KEY')
