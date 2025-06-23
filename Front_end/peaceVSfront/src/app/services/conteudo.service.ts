@@ -6,7 +6,7 @@ import { Observable, Observer } from 'rxjs';
   providedIn: 'root',
 })
 export class ConteudoService {
-  private apiBase = 'http://0.0.0.0:8000/api/';
+  private apiBase = 'https://192.168.1.140/api/';
 
   constructor(private http: HttpClient) {}
 
