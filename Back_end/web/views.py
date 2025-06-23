@@ -46,7 +46,6 @@ def home(request):
                     'name': cat['name'],
                     'movie': filmes_list
                 })
-    print(categorias_com_filmes)  # Para depuração, pode ser removido depois
     return render(request, 'web/home.html', {'categorias': categorias_com_filmes})
 
 class LoginView(View):

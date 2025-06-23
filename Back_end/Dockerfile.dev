@@ -3,12 +3,13 @@ FROM python:3.12-slim
 
 ENV PYTHONDONTWRITEBYTECODE=1
 ENV PYTHONUNBUFFERED=1
+ENV DJANGO_SETTINGS_MODULE=project.settings
 
 WORKDIR /app
 
-COPY requirements.txt /app/
+COPY Back_end/requirements.txt /app/
 RUN pip install --upgrade pip && pip install -r requirements.txt
 
-COPY . /app/
+COPY Back_end/ /app/
 
-CMD ["gunicorn", "project.wsgi:application", "--bind", "0.0.0.0:8000", "--reload"]
+CMD ["sh", "-c", "gunicorn project.wsgi:application --bind 0.0.0.0:8000 --reload"]

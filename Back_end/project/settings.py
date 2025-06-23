@@ -26,7 +26,7 @@ except ImportError:
 # Diretórios customizados para static e templates do app web
 WEB_APP_DIR = os.path.join(BASE_DIR, 'web')
 STATICFILES_DIRS = [
-    os.path.join(WEB_APP_DIR, 'static'),
+    os.path.join(BASE_DIR, 'web', 'static'),
 ]
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles_collected')
 
@@ -72,6 +72,7 @@ SEEDER_APPS = [
 ]
 
 MIDDLEWARE = [
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -149,7 +150,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field

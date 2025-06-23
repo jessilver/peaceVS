@@ -25,6 +25,7 @@ services:
       - ./Back_end:/app
       - ./Back_end/cert.pem:/app/cert.pem:ro
       - ./Back_end/key.pem:/app/key.pem:ro
+      - ./Back_end/staticfiles_collected:/app/staticfiles_collected
     expose:
       - "8000"
     env_file:
