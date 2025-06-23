@@ -1,0 +1,23 @@
+# Estágio de desenvolvimento
+FROM node:20-alpine
+
+# Instala o Ionic CLI globalmente
+RUN npm install -g @ionic/cli
+
+WORKDIR /app
+
+# Copia os arquivos de dependência e instala
+# Copiar package-lock.json garante builds consistentes
+COPY package*.json ./
+RUN npm install
+
+# Copia o restante dos arquivos da aplicação
+COPY . .
+
+# Expõe a porta padrão do ionic serve e a porta de live reload
+EXPOSE 8100
+EXPOSE 35729
+
+# Roda o servidor de desenvolvimento do Ionic
+# --host=0.0.0.0 torna o servidor acessível de fora do container
+CMD ["ionic", "serve", "--host=0.0.0.0", "--port", "8100", "--live-reload-port", "35729"]

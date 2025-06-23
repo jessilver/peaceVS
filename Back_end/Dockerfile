@@ -11,4 +11,9 @@ RUN pip install --upgrade pip && pip install -r requirements.txt
 
 COPY . /app/
 
-CMD ["gunicorn", "project.wsgi:application", "--bind", "0.0.0.0:8000"]
+# Copia o script de entrypoint e o torna executável
+COPY entrypoint.sh /app/
+RUN chmod +x /app/entrypoint.sh
+
+# Define o entrypoint que será executado quando o container iniciar
+ENTRYPOINT ["/app/entrypoint.sh"]

@@ -17,7 +17,6 @@ services:
 
   backend:
     build: ./Back_end
-    command: gunicorn project.wsgi:application --bind 0.0.0.0:8000
     volumes:
       - ./Back_end:/app
     expose:
@@ -48,6 +47,12 @@ services:
     volumes:
       - ./Back_end/nginx.conf:/etc/nginx/conf.d/default.conf:ro
       - ./Back_end/staticfiles_collected:/app/staticfiles_collected:ro
+    restart: unless-stopped
+
+  frontend:
+    build: ./Front_end/peaceVSfront
+    ports:
+      - "8100:80"
     restart: unless-stopped
 
 volumes:
