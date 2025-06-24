@@ -1,7 +1,8 @@
 from django.shortcuts import render, redirect
 from conteudo.models import Genero, Filme
 from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth.models import User
+# from django.contrib.auth.models import User
+from users.models import CustomUser as User
 from django.contrib import messages
 from django.views import View
 from users.models import UserProfile
@@ -80,7 +81,6 @@ class SignupView(View):
         return render(request, 'web/signup.html')
 
     def post(self, request, *args, **kwargs):
-        username = request.POST.get('email')
         email = request.POST.get('email')
         password = request.POST.get('password')
         first_name = request.POST.get('first_name')
@@ -91,13 +91,13 @@ class SignupView(View):
             messages.error(request, 'Todos os campos são obrigatórios.')
             return redirect('web_signup')
 
-        if User.objects.filter(username=username).exists():
+        if User.objects.filter(email=email).exists():
             messages.error(request, 'Este email já está em uso.')
             return redirect('web_signup')
 
         try:
             # Cria o usuário
-            user = User.objects.create_user(username=username, email=email, password=password)
+            user = User.objects.create_user(email=email, password=password)
             user.first_name = first_name
             user.last_name = last_name
             user.save()
