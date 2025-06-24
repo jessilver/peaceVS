@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  apiUrl: 'https://peacetvs-backend-latest.onrender.com',
+  apiUrl: 'https://localhost:8000',
 
   /*
    * For easier debugging in development mode, you can import the following file
