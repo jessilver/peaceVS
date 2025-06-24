@@ -179,5 +179,5 @@ Essas instruções garantem que qualquer desenvolvedor consiga rodar, debugar e 
 - Ajuste as URLs de API nos arquivos de ambiente do Angular (`src/environments/environment.ts`) conforme necessário.
 - Não esqueça de configurar o CORS no Django para permitir requisições do frontend.
 
-npx ionic sync android
-npx ionic run android
+npx cap sync android
+npx cap run android

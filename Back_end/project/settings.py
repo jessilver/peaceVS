@@ -175,12 +175,15 @@ CORS_ALLOW_HEADERS = [
     'content-type',
 ]
 CORS_ALLOWED_ORIGINS = os.getenv('CORS_ALLOWED_ORIGINS', '').split(',')
+CORS_ALLOW_NULL_ORIGIN = True
+
+CORS_ALLOWED_ORIGIN_REGEXES = [
+    r"^capacitor://localhost$",
+    r"^ionic://localhost$",
+    r"^https://(\w+\.)?seuservidorionic\.com$",
+]
 
 # TMDb API Key
 TMDB_API_KEY = os.getenv('TMDB_API_KEY')
 
-CSRF_TRUSTED_ORIGINS = [
-    "http://localhost:8000",
-    "http://127.0.0.1:8000",
-    "https://localhost"
-]
+CSRF_TRUSTED_ORIGINS = os.getenv('CSRF_TRUSTED_ORIGINS', '').split(',')
