@@ -56,8 +56,7 @@
 
     {% if user.is_authenticated %}
     <!-- Right elements -->
-    <div class="d-flex align-items-center">
-
+    <div class="d-flex align-items-center gap-3">
       <!-- Notifications -->
       <div class="dropdown notifications-dropdown">
         <a
@@ -112,17 +111,11 @@
           aria-labelledby="navbarDropdownMenuAvatar"
           style="background: var(--surface-l5);"
         >
-          
           <li>
             <a href="#" class="dropdown-item" style="color: var(--content-primary);">Meu Perfil</a>
           </li>
           <li>
             <a href="#" class="dropdown-item" style="color: var(--content-primary);">Configurações</a>
-          </li>
-          <li>
-            <a href="{% url "dashboard_filmes" %}" class="dropdown-item" style="color: var(--content-primary);">
-                <i class="fas fa-tachometer-alt me-2"></i>Dashboard
-            </a>
           </li>
           <li>
             <form id="logout-form" action="{% url 'web_logout' %}" method="post" style="display: none;">
@@ -131,6 +124,28 @@
             <a href="#" class="dropdown-item" style="color: var(--content-primary);" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                 Logout
             </a>
+          </li>
+        </ul>
+      </div>
+      <!-- Actions -->
+      <div class="dropdown actions-dropdown">
+        <a
+          data-mdb-dropdown-init
+          class="dropdown-toggle d-flex align-items-center hidden-arrow"
+          href="#"
+          id="navbarDropdownMenuActions"
+          role="button"
+          aria-expanded="false"
+        >
+            <i class="fas fa-cog" style="color: var(--accent-cyan);"></i>
+        </a>
+        <ul
+          class="dropdown-menu dropdown-menu-end"
+          aria-labelledby="navbarDropdownMenuActions"
+          style="background: var(--surface-l5);"
+        >
+          <li>
+            <a href="{% url "web_criar_filme" %}" class="dropdown-item" style="color: var(--content-primary);">Novo Filme</a>
           </li>
         </ul>
       </div>

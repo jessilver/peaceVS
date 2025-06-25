@@ -1,6 +1,6 @@
 from django.urls import path, include
 from . import views
-from .views import LoginView, LogoutView, SignupView, FavoritosView
+from .views import LoginView, LogoutView, SignupView, FavoritosView, CriarFilmeView
 
 urlpatterns = [
     path('', views.home, name='web_home'),
@@ -9,5 +9,5 @@ urlpatterns = [
     path('signup/', SignupView.as_view(), name='web_signup'),
     path('filmes/', views.filmes, name='web_filmes'),
     path('favoritos/', FavoritosView.as_view(), name='web_favoritos'),
-    path('dashboard/', include('web.d_urls')),
+    path('criar_filme/', CriarFilmeView.as_view(), name='web_criar_filme'),
 ]

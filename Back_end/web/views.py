@@ -10,7 +10,8 @@ from django.db.models import Prefetch
 from favoritos.models import FavoritoFilme, FavoritoSerie
 from conteudo.models import Serie
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.contrib.auth.decorators import login_required
+import requests
+from django.utils.text import slugify
 
 def home(request):
     # Categorias pré-definidas para a página inicial.
@@ -73,12 +74,10 @@ class LoginView(View):
             messages.error(request, 'Credenciais inválidas. Por favor, tente novamente.')
             return redirect('web_login')
 
-
 class LogoutView(View):
     def post(self, request, *args, **kwargs):
         logout(request)
         return redirect('web_home')
-
 
 class SignupView(View):
     def get(self, request, *args, **kwargs):
@@ -117,9 +116,7 @@ class SignupView(View):
             messages.error(request, f'Ocorreu um erro inesperado durante o cadastro: {e}')
             return redirect('web_signup')
 
-
 def filmes(request):
-    # Otimização para buscar todos os gêneros e seus filmes de forma eficiente.
     # Usa Prefetch para evitar o problema de N+1 queries, resultando em apenas 2 consultas ao banco.
     prefetch_filmes_ativos = Prefetch(
         'filmes',
@@ -160,7 +157,44 @@ class FavoritosView(LoginRequiredMixin, View):
             'favoritos_series': favoritos_series,
         })
 
-class DashboardFilmesView(LoginRequiredMixin, View):
-    def get(self, request, *args, **kwargs):
-        return render(request, 'dashboard/filmes.html')
+class CriarFilmeView(LoginRequiredMixin, View):
+    def get(self, request):
+        context = {
+            'generos': Genero.objects.all(),
+        }
+        return render(request, 'web/criar_filme.html', context)
 
+    def post(self, request):
+        try:
+            titulo = request.POST.get('titulo')
+            sinopse = request.POST.get('sinopse')
+            ano_lancamento = request.POST.get('ano_lancamento')
+            imagem_poster_url = request.POST.get('imagem_poster_url')
+            classificacao_indicativa = request.POST.get('classificacao_indicativa')
+            slug = slugify(titulo)
+            ativo = request.POST.get('ativo') == 'on'
+            duracao_minutos = request.POST.get('duracao_minutos')
+            arquivo_video_url = request.POST.get('arquivo_video_url')
+            generos_ids = request.POST.getlist('generos')
+
+            # Criação do filme
+            filme = Filme.objects.create(
+                titulo=titulo,
+                sinopse=sinopse,
+                ano_lancamento=ano_lancamento,
+                imagem_poster_url=imagem_poster_url,
+                classificacao_indicativa=classificacao_indicativa,
+                slug=slug,
+                ativo=ativo,
+                duracao_minutos=duracao_minutos,
+                arquivo_video_url=arquivo_video_url,
+            )
+
+            # Adiciona os gêneros ao filme
+            filme.generos.set(generos_ids)
+
+            messages.success(request, 'Filme criado com sucesso!')
+            return redirect('web_home')
+        except Exception as e:
+            messages.error(request, f'Ocorreu um erro ao criar o filme: {e}')
+            return redirect('web_criar_filme')
