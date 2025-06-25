@@ -1,4 +1,4 @@
-from django.urls import path
+from django.urls import path, include
 from . import views
 from .views import LoginView, LogoutView, SignupView, FavoritosView
 
@@ -9,4 +9,5 @@ urlpatterns = [
     path('signup/', SignupView.as_view(), name='web_signup'),
     path('filmes/', views.filmes, name='web_filmes'),
     path('favoritos/', FavoritosView.as_view(), name='web_favoritos'),
+    path('dashboard/', include('web.d_urls')),
 ]

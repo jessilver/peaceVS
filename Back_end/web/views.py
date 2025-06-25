@@ -10,6 +10,7 @@ from django.db.models import Prefetch
 from favoritos.models import FavoritoFilme, FavoritoSerie
 from conteudo.models import Serie
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.decorators import login_required
 
 def home(request):
     # Categorias pré-definidas para a página inicial.
@@ -158,3 +159,8 @@ class FavoritosView(LoginRequiredMixin, View):
             'favoritos_filmes': favoritos_filmes,
             'favoritos_series': favoritos_series,
         })
+
+class DashboardFilmesView(LoginRequiredMixin, View):
+    def get(self, request, *args, **kwargs):
+        return render(request, 'dashboard/filmes.html')
+
