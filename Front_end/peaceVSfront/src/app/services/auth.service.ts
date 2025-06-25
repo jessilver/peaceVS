@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, BehaviorSubject } from 'rxjs';
 import { environment } from '../../environments/environment';
 
 @Injectable({
@@ -9,6 +9,7 @@ import { environment } from '../../environments/environment';
 export class AuthService {
   private apiUrl = `${environment.apiUrl}/api/token/`;
   private userUrl = `${environment.apiUrl}/api/user/me/`;
+  private loggedIn$ = new BehaviorSubject<boolean>(this.isAuthenticated());
 
   constructor(private http: HttpClient) {}
 
@@ -18,6 +19,7 @@ export class AuthService {
 
   setToken(token: string): void {
     localStorage.setItem('token', token);
+    this.loggedIn$.next(true);
   }
 
   getToken(): string | null {
@@ -26,6 +28,7 @@ export class AuthService {
 
   logout(): void {
     localStorage.removeItem('token');
+    this.loggedIn$.next(false);
   }
 
   isAuthenticated(): boolean {
@@ -36,5 +39,9 @@ export class AuthService {
     const token = this.getToken();
     const headers = new HttpHeaders({ Authorization: `Token ${token}` });
     return this.http.get(this.userUrl, { headers });
+  }
+
+  getLoggedInStatus() {
+    return this.loggedIn$.asObservable();
   }
 }
