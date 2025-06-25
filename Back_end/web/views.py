@@ -25,19 +25,19 @@ def home(request):
         },
         {
             'name': 'Lançamentos Recentes',
-            'movie': Filme.objects.filter(ativo=True).order_by('-data_adicao')[:20]
+            'movie': Filme.objects.filter(ativo=True).order_by('-ano_lancamento')[:40]
         },
         {
             'name': 'Ação',
-            'movie': Filme.objects.filter(ativo=True, generos__nome='Ação').order_by('-data_adicao')[:20]
+            'movie': Filme.objects.filter(ativo=True, generos__nome='Ação').order_by('-ano_lancamento')[:40]
         },
         {
             'name': 'Comédia',
-            'movie': Filme.objects.filter(ativo=True, generos__nome='Comédia').order_by('-data_adicao')[:20]
+            'movie': Filme.objects.filter(ativo=True, generos__nome='Comédia').order_by('-ano_lancamento')[:40]
         },
         {
             'name': 'Ficção Científica',
-            'movie': Filme.objects.filter(ativo=True, generos__nome='Ficção Científica').order_by('-data_adicao')[:20]
+            'movie': Filme.objects.filter(ativo=True, generos__nome='Ficção Científica').order_by('-ano_lancamento')[:40]
         }
     ]
     # Filtra apenas as categorias que retornaram filmes para não exibir carrosséis vazios.
@@ -135,6 +135,7 @@ def filmes(request):
 
     # Monta a estrutura de dados que o template espera
     categorias = []
+
     for genero in generos_com_filmes:
         # Acessa os filmes do atributo customizado 'filmes_ativos'
         if hasattr(genero, 'filmes_ativos') and genero.filmes_ativos:
