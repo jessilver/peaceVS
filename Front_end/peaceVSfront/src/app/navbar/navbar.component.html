@@ -4,9 +4,17 @@
       PeaceVS
     </ion-title>
     <ion-buttons slot="end">
-      <ion-button>
+      <ion-button id="profile-button">
         <ion-icon name="person-circle-outline"></ion-icon>
       </ion-button>
+      <ion-popover trigger="profile-button" dismissOnSelect="true">
+        <ion-content>
+          <ion-list>
+            <ion-item button (click)="onLogin()" *ngIf="!isLoggedIn">Login</ion-item>
+            <ion-item button (click)="onLogout()" *ngIf="isLoggedIn">Logout</ion-item>
+          </ion-list>
+        </ion-content>
+      </ion-popover>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>

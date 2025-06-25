@@ -1,64 +1,13 @@
 services:
-  postgres:
-    image: postgres:latest
-    env_file:
-      - .env
-    environment:
-      POSTGRES_USER: mainuser
-      POSTGRES_PASSWORD: 123456789
-      POSTGRES_DB: peacetvs_db
-    ports:
-      - "5432:5432"
-    volumes:
-      - postgres_data:/var/lib/postgresql/data
-    healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U mainuser"]
-      interval: 5s
-      timeout: 5s
-      retries: 5
-
   backend:
     build:
       context: ./Back_end
       dockerfile: Dockerfile.dev
     volumes:
       - ./Back_end:/app
-      - ./Back_end/cert.pem:/app/cert.pem:ro
-      - ./Back_end/key.pem:/app/key.pem:ro
       - ./Back_end/staticfiles_collected:/app/staticfiles_collected
     expose:
-      - "8000"
+      - "8000:8000"
     env_file:
       - .env
-    depends_on:
-      postgres:
-        condition: service_healthy
     command: gunicorn project.wsgi:application --bind 0.0.0.0:8000 --reload
-
-  nginx:
-    image: nginx:1.25-alpine
-    container_name: nginx
-    depends_on:
-      - backend
-    ports:
-      - "443:443"
-    volumes:
-      - ./Back_end/nginx.conf:/etc/nginx/conf.d/default.conf
-      - ./Back_end/nginx/ssl:/etc/nginx/ssl:ro
-      - ./Back_end/staticfiles_collected:/app/staticfiles_collected:ro
-    restart: unless-stopped
-
-  frontend:
-    build:
-      context: ./Front_end/peaceVSfront
-      dockerfile: Dockerfile.dev
-    ports:
-      - "8100:8100"
-      - "35729:35729"
-    volumes:
-      - ./Front_end/peaceVSfront:/app
-      - /app/node_modules
-    restart: unless-stopped
-
-volumes:
-  postgres_data:

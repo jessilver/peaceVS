@@ -181,3 +181,7 @@ Essas instruções garantem que qualquer desenvolvedor consiga rodar, debugar e 
 
 npx cap sync android
 npx cap run android
+
+docker build -t jessilver/peacetvs-backend:latest -f Back_end Dockerfile.dev .
+
+docker push jessilver/peacetvs-backend:latest
