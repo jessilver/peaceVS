@@ -52,15 +52,6 @@ document.addEventListener('DOMContentLoaded', function() {
             const cardCount = cards.length;
             const itemsVisible = getItemsVisible();
 
-            if (cardCount <= itemsVisible) {
-                prevButton.style.display = 'none';
-                nextButton.style.display = 'none';
-                return;
-            } else {
-                prevButton.style.display = 'block';
-                nextButton.style.display = 'block';
-            }
-            
             // Lógica de clonagem
             for (let i = 0; i < itemsVisible; i++) {
                 if (cards[i]) {

@@ -12,11 +12,17 @@ from conteudo.models import Serie
 from django.contrib.auth.mixins import LoginRequiredMixin
 import requests
 from django.utils.text import slugify
+from django.db import transaction
 
 def home(request):
+    favoritos_ids = FavoritoFilme.objects.filter(user=request.user).values_list('filme_id', flat=True) if request.user.is_authenticated else []
     # Categorias pré-definidas para a página inicial.
     # Cada consulta é separada, mas são poucas e diretas, muito mais rápidas que as chamadas de API.
     categorias = [
+        {
+            'name': 'Favoritos',
+            'movie': Filme.objects.filter(id__in=favoritos_ids).order_by('-data_adicao') if request.user.is_authenticated else None,
+        },
         {
             'name': 'Lançamentos Recentes',
             'movie': Filme.objects.filter(ativo=True).order_by('-data_adicao')[:20]
@@ -38,9 +44,10 @@ def home(request):
     categorias_com_filmes = []
     for cat in categorias:
         filmes = cat['movie']
-        if filmes.exists():
+        if filmes and filmes.exists():
             filmes_list = [
                 {
+                    'id': filme.id,
                     'poster_url': getattr(filme, 'imagem_poster_url', ''),
                     'title': getattr(filme, 'titulo', ''),
                     'overview': getattr(filme, 'sinopse', ''),
@@ -52,7 +59,7 @@ def home(request):
                     'name': cat['name'],
                     'movie': filmes_list
                 })
-    return render(request, 'web/home.html', {'categorias': categorias_com_filmes})
+    return render(request, 'web/home.html', {'categorias': categorias_com_filmes, 'favoritos_ids': favoritos_ids})
 
 class LoginView(View):
     def get(self, request, *args, **kwargs):
@@ -133,6 +140,7 @@ def filmes(request):
         if hasattr(genero, 'filmes_ativos') and genero.filmes_ativos:
             filmes_list = [
                 {
+                    'id': filme.id,
                     'poster_url': getattr(filme, 'imagem_poster_url', ''),
                     'title': getattr(filme, 'titulo', ''),
                     'overview': getattr(filme, 'sinopse', ''),
@@ -198,3 +206,80 @@ class CriarFilmeView(LoginRequiredMixin, View):
         except Exception as e:
             messages.error(request, f'Ocorreu um erro ao criar o filme: {e}')
             return redirect('web_criar_filme')
+        
+class EditarFilmeView(LoginRequiredMixin, View):
+    def get(self, request, id):
+        try:
+            filme = Filme.objects.get(id=id)
+            generos_selecionados = list(filme.generos.values_list('id', flat=True))
+            context = {
+                'filme': filme,
+                'generos': Genero.objects.all(),
+                'generos_selecionados': generos_selecionados,
+            }
+            return render(request, 'web/editar_filme.html', context)
+        except Filme.DoesNotExist:
+            messages.error(request, 'Filme não encontrado.')
+            return redirect('web_filmes')          
+
+    def post(self, request, id):
+        try:
+            with transaction.atomic():
+                filme = Filme.objects.get(id=id)
+                titulo = request.POST.get('titulo')
+                sinopse = request.POST.get('sinopse')
+                ano_lancamento = request.POST.get('ano_lancamento')
+                imagem_poster_url = request.POST.get('imagem_poster_url')
+                classificacao_indicativa = request.POST.get('classificacao_indicativa')
+                ativo = request.POST.get('ativo') == 'on'
+                duracao_minutos = request.POST.get('duracao_minutos')
+                arquivo_video_url = request.POST.get('arquivo_video_url')
+                generos_ids = request.POST.getlist('generos')
+
+                # Atualiza os campos do filme
+                filme.titulo = titulo
+                filme.sinopse = sinopse
+                filme.ano_lancamento = ano_lancamento
+                filme.imagem_poster_url = imagem_poster_url
+                filme.classificacao_indicativa = classificacao_indicativa
+                filme.ativo = ativo
+                filme.duracao_minutos = duracao_minutos
+                filme.arquivo_video_url = arquivo_video_url
+
+                # Salva as alterações
+                filme.save()
+
+                # Atualiza os gêneros do filme
+                filme.generos.set(generos_ids)
+
+            messages.success(request, 'Filme atualizado com sucesso!')
+            return redirect('web_home')
+        except Filme.DoesNotExist:
+            messages.error(request, 'Filme não encontrado.')
+            return redirect('web_filmes') 
+        except Exception as e:
+            messages.error(request, f'Ocorreu um erro ao atualizar o filme: {e}')
+            return redirect('web_editar_filme', id=id)
+        
+def deletarFilme(request, id):
+    try:
+        filme = Filme.objects.get(id=id)
+        filme.delete()
+        messages.success(request, 'Filme deletado com sucesso!')
+    except Filme.DoesNotExist:
+        messages.error(request, 'Filme não encontrado.')
+    except Exception as e:
+        messages.error(request, f'Ocorreu um erro ao deletar o filme: {e}')
+    return redirect('web_home')
+
+def adicionarFavorito(request, id):
+    if request.user.is_authenticated:
+        FavoritoFilme.objects.get_or_create(user=request.user, filme_id=id)
+        messages.success(request, 'Filme adicionado aos favoritos!')
+    return redirect('web_home')
+
+def removerFavorito(request, id):
+    if request.user.is_authenticated:
+        FavoritoFilme.objects.filter(user=request.user, filme_id=id).delete()
+        messages.success(request, 'Filme removido dos favoritos!')
+    return redirect('web_home')

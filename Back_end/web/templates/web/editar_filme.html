@@ -1,0 +1,132 @@
+{% extends "layouts/_base.html" %}
+
+{% block content %}
+<!-- Background image -->
+<div id="intro" class="bg-image shadow-2-strong">
+    <div class="mask d-flex align-items-center h-100" style="background-color: rgba(0, 0, 0, 0.8);">
+        <div class="container-fluid">
+            <div class="row justify-content-center">
+                <div class="col-xl-5 col-md-8">
+                    <form method="post" action="" class="rounded shadow-5-strong p-5 mt-5" style="background: var(--surface-l2); color: var(--content-primary);">
+                    {% csrf_token %}
+                    <!-- Título input -->
+                    <div class="form-outline mb-4" data-mdb-input-init>
+                        <input type="text" id="formTitulo" name="titulo" class="form-control" value="{{ filme.titulo }}" style="background: var(--surface-l1); color: var(--content-primary);" required />
+                        <label class="form-label" for="formTitulo" style="color: var(--content-secondary);">Título</label>
+                    </div>
+
+                    <!-- Sinopse input -->
+                    <div class="form-outline mb-4" data-mdb-input-init>
+                        <textarea id="formSinopse" name="sinopse" class="form-control" style="background: var(--surface-l1); color: var(--content-primary);" required>{{ filme.sinopse }}</textarea>
+                        <label class="form-label" for="formSinopse" style="color: var(--content-secondary);">Sinopse</label>
+                    </div>
+
+                    <!-- Classificação Indicativa, Ano de Lançamento e Duração na mesma linha -->
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-outline mb-4" data-mdb-input-init>
+                                <input type="text" id="formClassificacao" name="classificacao_indicativa" class="form-control" value="{{ filme.classificacao_indicativa }}" style="background: var(--surface-l1); color: var(--content-primary);" />
+                                <label class="form-label" for="formClassificacao" style="color: var(--content-secondary);">Classificação Indicativa</label>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-outline mb-4" data-mdb-input-init>
+                                <input type="number" id="formAnoLancamento" name="ano_lancamento" class="form-control" value="{{ filme.ano_lancamento }}" style="background: var(--surface-l1); color: var(--content-primary);" required />
+                                <label class="form-label" for="formAnoLancamento" style="color: var(--content-secondary);">Ano de Lançamento</label>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-outline mb-4" data-mdb-input-init>
+                                <input type="number" id="formDuracao" name="duracao_minutos" class="form-control" value="{{ filme.duracao_minutos }}" style="background: var(--surface-l1); color: var(--content-primary);" required />
+                                <label class="form-label" for="formDuracao" style="color: var(--content-secondary);">Duração (minutos)</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- URL do Poster e URL do Arquivo de Vídeo na mesma linha -->
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-outline mb-4" data-mdb-input-init>
+                                <input type="url" id="formPosterUrl" name="imagem_poster_url" class="form-control" value="{{ filme.imagem_poster_url }}" style="background: var(--surface-l1); color: var(--content-primary);" />
+                                <label class="form-label" for="formPosterUrl" style="color: var(--content-secondary);">URL do Poster</label>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-outline mb-4" data-mdb-input-init>
+                                <input type="url" id="formVideoUrl" name="arquivo_video_url" class="form-control" value="{{ filme.arquivo_video_url }}" style="background: var(--surface-l1); color: var(--content-primary);" />
+                                <label class="form-label" for="formVideoUrl" style="color: var(--content-secondary);">URL do Arquivo de Vídeo</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Ativo checkbox -->
+                    <div class="form-check mb-4">
+                        <input type="checkbox" id="formAtivo" name="ativo" class="form-check-input" style="background: var(--surface-l1); color: var(--content-primary);" {% if filme.ativo %}checked{% endif %} />
+                        <label class="form-check-label" for="formAtivo" style="color: var(--content-secondary);">Ativo</label>
+                    </div>
+
+                    <!-- Feedback visual para mensagens -->
+                    {% if messages %}
+                    <div class="alert alert-dismissible fade show" role="alert">
+                        {% for message in messages %}
+                            <div class="alert-{{ message.tags }}">{{ message }}</div>
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+
+                    <!-- Ajuste para múltipla seleção de gêneros -->
+                    <label class="form-label" for="formGeneros" style="color: var(--content-secondary);">Gêneros</label>
+                    <div class="form-outline mb-4" data-mdb-input-init>
+                        <select id="formGeneros" name="generos" class="form-control" style="background: var(--surface-l1); color: var(--content-primary);" multiple required>
+                            {% for genero in generos %}
+                                <option value="{{ genero.id }}" {% if genero.id in generos_selecionados %}selected{% endif %}>{{ genero.nome }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <!-- Submit button -->
+                    <button type="submit" class="btn btn-rounded neon-glow-primary btn-block w-100" data-mdb-ripple-init style="background: var(--primary); color: var(--on-primary);">Editar Filme</button>
+                    <button type="button" class="btn btn-rounded neon-glow-danger btn-block w-100" data-mdb-ripple-init style="background: var(--danger); color: var(--on-danger);" onclick="event.preventDefault(); if(confirm('Você tem certeza que deseja deletar este filme?')) { document.getElementById('delete-filme-form').submit(); }">
+                        Deletar Filme
+                    </button>
+                    </form>
+                    <form id="delete-filme-form" action="{% url 'web_deletar_filme' filme.id %}" method="post" style="display: none;">
+                        {% csrf_token %}
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Background image -->
+{% endblock %}
+
+{% block scripts %}
+<script>
+
+document.addEventListener('#delete-button', 'click', function(event) {
+    event.preventDefault();
+    const filmeId = event.currentTarget.getAttribute('data-id');
+    if (confirm('Você tem certeza que deseja deletar este filme?')) {
+        fetch(`/filmes/${filmeId}/`, {
+            method: 'DELETE',
+            headers: {
+                'X-CSRFToken': '{{ csrf_token }}',
+                'Accept': 'application/json'
+            }
+        })
+        .then(response => {
+            if (response.ok) {
+                window.location.href = '/home/';
+            } else {
+                alert('Erro ao deletar o filme.');
+            }
+        })
+        .catch(error => {
+            alert('Erro ao deletar o filme.');
+        });
+    }
+});
+
+</script>
+{% endblock %}

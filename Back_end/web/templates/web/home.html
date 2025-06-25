@@ -18,8 +18,23 @@
                                         <h5 class="hover-title">{{ movie.title }}</h5>
                                         <p class="hover-description">{{ movie.overview|default:"Sem descrição." }}</p>
                                         <div class="hover-buttons">
-                                            <a href="#" class="btn btn-danger btn-sm">▶ Assistir</a>
-                                            <a href="#" class="btn btn-outline-light btn-sm">+</a>
+                                            <a href="#" class="btn btn-danger btn-sm">
+                                                <i class="fas fa-play pe-1"></i> Assistir
+                                            </a>
+                                            {% if movie.id in favoritos_ids %}
+                                                <a href="{% url 'remover_favorito' movie.id %}" class="btn btn-outline-danger btn-sm">
+                                                    <i class="fas fa-star-half-alt"></i>
+                                                </a>
+                                            {% else %}
+                                                <a href="{% url 'adicionar_favorito' movie.id %}" class="btn btn-outline-warning btn-sm">
+                                                    <i class="fas fa-star"></i>
+                                                </a>
+                                            {% endif %}
+                                            {% if user.is_staff and movie.id %}
+                                            <a href="{% url 'web_editar_filme' movie.id %}" class="btn btn-outline-primary btn-sm">
+                                                <i class="fas fa-pencil-alt"></i>
+                                            </a>
+                                            {% endif %}
                                         </div>
                                     </div>
                                 </div>
