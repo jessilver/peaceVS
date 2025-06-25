@@ -20,6 +20,26 @@ document.addEventListener('DOMContentLoaded', function() {
             return;
         }
 
+        cards = cardWrapper.querySelectorAll('.carousel-card'); 
+        if(cards.length <6) {
+            console.error("Carrossel deve ter pelo menos 6 cards para funcionar corretamente:", carouselElement);
+            prevButton.style.display = 'none';
+            nextButton.style.display = 'none';
+            cardWrapper.classList.add('no-transition');
+            cardWrapper.style.transform = 'translateX(0)';
+            carouselInnerWrapper.classList.add('no-transition');
+            carouselInnerWrapper.style.width = '100%';
+            carouselInnerWrapper.style.overflow = 'hidden';
+            carouselElement.classList.add('carousel-no-transition');
+            carouselElement.style.width = '100%';
+            carouselElement.style.overflow = 'hidden';
+            carouselElement.style.position = 'relative';
+            carouselElement.style.display = 'flex';
+            carouselElement.style.justifyContent = 'center';
+            carouselElement.style.alignItems = 'center';    
+            return;
+        }
+
         // --- LÓGICA DO HOVER PARA RESOLVER O RECORTE ---
         if (carouselInnerWrapper) {
             carouselElement.addEventListener('mouseenter', () => {
@@ -52,37 +72,52 @@ document.addEventListener('DOMContentLoaded', function() {
             const cardCount = cards.length;
             const itemsVisible = getItemsVisible();
 
-            // Lógica de clonagem
-            for (let i = 0; i < itemsVisible; i++) {
-                if (cards[i]) {
-                    const clone = cards[i].cloneNode(true);
-                    clone.classList.add('clone');
-                    cardWrapper.appendChild(clone);
+            // Remove clones antigos
+            cardWrapper.querySelectorAll('.clone').forEach(clone => clone.remove());
+
+            // Só clona se houver mais de 5 cards
+            if (cardCount > 5) {
+                // Lógica de clonagem para loop infinito
+                for (let i = 0; i < itemsVisible; i++) {
+                    if (cards[i]) {
+                        const clone = cards[i].cloneNode(true);
+                        clone.classList.add('clone');
+                        cardWrapper.appendChild(clone);
+                    }
                 }
-            }
-            for (let i = cardCount - 1; i >= cardCount - itemsVisible; i--) {
-                if (cards[i]) {
-                    const clone = cards[i].cloneNode(true);
-                    clone.classList.add('clone');
-                    cardWrapper.insertBefore(clone, cardWrapper.firstChild);
+                for (let i = cardCount - 1; i >= cardCount - itemsVisible; i--) {
+                    if (cards[i]) {
+                        const clone = cards[i].cloneNode(true);
+                        clone.classList.add('clone');
+                        cardWrapper.insertBefore(clone, cardWrapper.firstChild);
+                    }
                 }
+                currentIndex = Math.min(itemsVisible, cardCount);
+                reposition(false);
             }
-            
-            currentIndex = itemsVisible;
-            reposition(false);
         }
 
         function reposition(animated = true) {
             const cardWidth = getCardWidth();
+            const cards = cardWrapper.querySelectorAll('.carousel-card');
+            const cardCount = cards.length;
+            const itemsVisible = getItemsVisible();
+            // Limita o índice para não sair do range
+            if (currentIndex > cardCount + itemsVisible) currentIndex = itemsVisible;
+            if (currentIndex < 0) currentIndex = 0;
             if (!animated) cardWrapper.classList.add('no-transition');
             cardWrapper.style.transform = `translateX(${-currentIndex * cardWidth}px)`;
             if (!animated) {
-                cardWrapper.offsetHeight; 
+                cardWrapper.offsetHeight;
                 cardWrapper.classList.remove('no-transition');
             }
         }
 
         function moveCarousel(direction) {
+            const cards = cardWrapper.querySelectorAll('.carousel-card');
+            const cardCount = cards.length;
+            const itemsVisible = getItemsVisible();
+            if (cardCount <= itemsVisible) return; // Não move se não há o suficiente
             if (isTransitioning) return;
             isTransitioning = true;
             currentIndex += direction;

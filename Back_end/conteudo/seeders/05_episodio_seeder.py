@@ -7,7 +7,7 @@ class EpisodioSeeder(BaseSeeder):
         return 'EpisodioSeeder'
 
     def seed(self):
-        pass
+        return
         # temporada = Temporada.objects.first()
         # if not temporada:
         #     self.error('Nenhuma temporada encontrada. Rode o seeder de temporada antes.')

@@ -7,6 +7,7 @@ class PessoaSeeder(BaseSeeder):
         return 'PessoaSeeder'
 
     def seed(self):
+        return
         pessoa, created = Pessoa.objects.get_or_create(
             nome_completo='Ator Exemplo',
             slug='ator-exemplo'

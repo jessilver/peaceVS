@@ -10,6 +10,7 @@ class SerieSeeder(BaseSeeder):
         return 'SerieSeeder'
 
     def seed(self):
+        return
         api_key = os.getenv('TMDB_API_KEY')
         if not api_key:
             self.error('TMDB_API_KEY não definida no ambiente.')

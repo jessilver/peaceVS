@@ -24,7 +24,6 @@ class FilmeSeeder(BaseSeeder):
             ('Animação', 16),
             ('Comédia', 35),
             ('Crime', 80),
-            ('Documentário', 99),
             ('Drama', 18),
             ('Família', 10751),
             ('Fantasia', 14),
@@ -55,6 +54,9 @@ class FilmeSeeder(BaseSeeder):
                 data = response.json()
                 filmes = data.get('results', [])
                 for movie in filmes:
+                    # Ignora filmes que tenham o gênero Documentário (id 99)
+                    if 99 in movie.get('genre_ids', []):
+                        continue
                     titulo = movie.get('title')
                     sinopse = movie.get('overview') or ''
                     ano = int(movie.get('release_date', '2000')[:4]) if movie.get('release_date') else 2000

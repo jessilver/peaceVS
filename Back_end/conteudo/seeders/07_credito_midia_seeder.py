@@ -7,6 +7,7 @@ class CreditoMidiaSeeder(BaseSeeder):
         return 'CreditoMidiaSeeder'
 
     def seed(self):
+        return
         pessoa = Pessoa.objects.first()
         filme = Filme.objects.first()
         if not pessoa or not filme:
