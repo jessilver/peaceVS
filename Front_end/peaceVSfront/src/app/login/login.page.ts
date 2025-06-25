@@ -24,7 +24,9 @@ export class LoginPage {
       next: (res) => {
         if (res.token) {
           this.authService.setToken(res.token);
-          this.router.navigate(['/home']);
+          this.router.navigateByUrl('/home', { skipLocationChange: false }).then(() => {
+            window.location.reload();
+          });
         }
       },
       error: () => {
