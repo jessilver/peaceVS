@@ -15,7 +15,7 @@ import { forkJoin } from 'rxjs';
 export class HomePage implements OnInit {
   user: any = null;
   generos: string[] = [
-    'Ação', 'Comédia', 'Drama', 'Terror', 'Romance', 'Ficção', 'Animação', 'Aventura'
+    'Ação', 'Comédia', 'Terror', 'Romance', 'Ficção', 'Animação', 'Aventura'
   ];
   filmesPorGenero: { genero: string, filmes: any[] }[] = [];
   filmeSelecionado: any = null;

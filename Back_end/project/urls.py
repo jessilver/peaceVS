@@ -27,6 +27,7 @@ from users.views import CustomUserViewSet, UserProfileViewSet, CustomObtainAuthT
 from conteudo.views import FilmeViewSet, SerieViewSet, TemporadaViewSet, EpisodioViewSet, GeneroViewSet, PessoaViewSet, CreditoMidiaViewSet
 from interactions.views import ItemListaInteresseViewSet, HistoricoVisualizacaoViewSet, AvaliacaoViewSet
 from subscriptions.views import PlanoAssinaturaViewSet, AssinaturaUsuarioViewSet
+from favoritos.views import FavoritoFilmeViewSet, FavoritoSerieViewSet
 
 router = routers.DefaultRouter()
 # Users
@@ -47,6 +48,9 @@ router.register(r'avaliacoes', AvaliacaoViewSet)
 # Subscriptions
 router.register(r'planos', PlanoAssinaturaViewSet)
 router.register(r'assinaturas', AssinaturaUsuarioViewSet)
+# Favorites
+router.register(r'favoritos-filmes', FavoritoFilmeViewSet, basename='favoritos-filmes')
+router.register(r'favoritos-series', FavoritoSerieViewSet, basename='favoritos-series')
 
 schema_view = get_schema_view(
     openapi.Info(

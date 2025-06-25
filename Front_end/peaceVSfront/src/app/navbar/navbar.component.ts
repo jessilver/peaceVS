@@ -3,22 +3,26 @@ import { IonHeader, IonToolbar, IonTitle, IonButtons, IonButton, IonIcon, IonPop
 import { personCircleOutline } from 'ionicons/icons';
 import { addIcons } from 'ionicons';
 import { CommonModule } from '@angular/common';
+import { AuthService } from '../services/auth.service';
+import { Router, RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.scss'],
   standalone: true,
-  imports: [CommonModule, IonHeader, IonToolbar, IonTitle, IonButtons, IonButton, IonIcon, IonPopover, IonContent, IonList, IonItem],
+  imports: [CommonModule, IonHeader, IonToolbar, IonTitle, IonButtons, IonButton, IonIcon, IonPopover, IonContent, IonList, IonItem, RouterModule],
 })
 export class NavbarComponent implements OnInit {
   isLoggedIn = false;
 
-  constructor() {
+  constructor(private authService: AuthService, private router: Router) {
     addIcons({ personCircleOutline });
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.isLoggedIn = this.authService.isAuthenticated();
+  }
 
   onLogin() {
     this.isLoggedIn = true;
@@ -26,7 +30,9 @@ export class NavbarComponent implements OnInit {
   }
 
   onLogout() {
+    this.authService.logout();
     this.isLoggedIn = false;
+    this.router.navigate(['/login']);
     console.log('User logged out');
   }
 

@@ -10,7 +10,7 @@
       <ion-popover trigger="profile-button" dismissOnSelect="true">
         <ion-content>
           <ion-list>
-            <ion-item button (click)="onLogin()" *ngIf="!isLoggedIn">Login</ion-item>
+            <ion-item button [routerLink]="['/login']" *ngIf="!isLoggedIn">Login</ion-item>
             <ion-item button (click)="onLogout()" *ngIf="isLoggedIn">Logout</ion-item>
           </ion-list>
         </ion-content>

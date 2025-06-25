@@ -3,6 +3,7 @@ import { IonContent, IonButton, IonList, IonItem, IonLabel, IonInput, IonRow, Io
 import { NavbarComponent } from '../navbar/navbar.component';
 import { AuthService } from '../services/auth.service';
 import { FormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -16,14 +17,14 @@ export class LoginPage {
   password = '';
   errorMsg = '';
 
-  constructor(private authService: AuthService) { }
+  constructor(private authService: AuthService, private router: Router) { }
 
   onLogin() {
     this.authService.login(this.email, this.password).subscribe({
       next: (res) => {
         if (res.token) {
           this.authService.setToken(res.token);
-          window.location.href = '/home';
+          this.router.navigate(['/home']);
         }
       },
       error: () => {

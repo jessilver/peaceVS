@@ -7,6 +7,9 @@ from django.contrib import messages
 from django.views import View
 from users.models import UserProfile
 from django.db.models import Prefetch
+from favoritos.models import FavoritoFilme, FavoritoSerie
+from conteudo.models import Serie
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 def home(request):
     # Categorias pré-definidas para a página inicial.
@@ -146,3 +149,12 @@ def filmes(request):
 
     # A view 'filmes' reutiliza o template 'home.html', então a estrutura de dados deve ser a mesma.
     return render(request, 'web/home.html', {'categorias': categorias})
+
+class FavoritosView(LoginRequiredMixin, View):
+    def get(self, request, *args, **kwargs):
+        favoritos_filmes = FavoritoFilme.objects.filter(user=request.user).select_related('filme')
+        favoritos_series = FavoritoSerie.objects.filter(user=request.user).select_related('serie')
+        return render(request, 'web/favoritos.html', {
+            'favoritos_filmes': favoritos_filmes,
+            'favoritos_series': favoritos_series,
+        })
