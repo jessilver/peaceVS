@@ -13,6 +13,8 @@ class FavoritoFilmeViewSet(viewsets.ModelViewSet):
         return FavoritoFilme.objects.filter(user=self.request.user)
 
     def perform_create(self, serializer):
+        print('Usuário autenticado:', self.request.user)
+        print('Authorization header:', self.request.META.get('HTTP_AUTHORIZATION'))
         serializer.save(user=self.request.user)
 
 class FavoritoSerieViewSet(viewsets.ModelViewSet):
@@ -23,4 +25,6 @@ class FavoritoSerieViewSet(viewsets.ModelViewSet):
         return FavoritoSerie.objects.filter(user=self.request.user)
 
     def perform_create(self, serializer):
+        print('Usuário autenticado:', self.request.user)
+        print('Authorization header:', self.request.META.get('HTTP_AUTHORIZATION'))
         serializer.save(user=self.request.user)

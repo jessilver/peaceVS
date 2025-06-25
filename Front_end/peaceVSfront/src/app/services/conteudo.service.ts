@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, Observer } from 'rxjs';
 import { environment } from '../../environments/environment';
 
@@ -29,6 +29,19 @@ export class ConteudoService {
   }
 
   /**
+   * Função utilitária para tratar filmes recebidos da API e padronizar estrutura
+   */
+  private tratarFilmes(filmes: any[]): any[] {
+    return (filmes || []).map(filme => ({
+      id: filme.id,
+      title: filme.titulo,
+      overview: filme.sinopse,
+      poster_url: filme.imagem_poster_url || 'https://via.placeholder.com/500x750.png?text=No+Image',
+      video_url: filme.arquivo_video_url,
+    }));
+  }
+
+  /**
    * Busca filmes filtrando por gênero (id ou array de ids) e faz o tratamento dos dados para o frontend
    * @param generoId número | número[]
    */
@@ -37,13 +50,7 @@ export class ConteudoService {
     return new Observable(observer => {
       this.http.get<any[]>(this.apiBase + 'filmes/', { params: { generos: param } }).subscribe({
         next: (filmes) => {
-          const filmesTratados = (filmes || []).map(filme => ({
-            title: filme.titulo,
-            overview: filme.sinopse,
-            poster_url: filme.imagem_poster_url || 'https://via.placeholder.com/500x750.png?text=No+Image',
-            video_url: filme.arquivo_video_url,
-          }));
-          observer.next(filmesTratados);
+          observer.next(this.tratarFilmes(filmes));
           observer.complete();
         },
         error: err => observer.error(err)
@@ -178,5 +185,41 @@ export class ConteudoService {
   }
   deleteCredito(id: number): Observable<any> {
     return this.http.delete(this.apiBase + 'creditos/' + id + '/');
+  }
+
+  // Favoritos
+  adicionarFilmeAosFavoritos(filmeId: number) {
+    const token = localStorage.getItem('token');
+    const headers = token ? new HttpHeaders({ Authorization: `Token ${token}` }) : undefined;
+    return this.http.post(this.apiBase + 'favoritos-filmes/', { filme: filmeId }, { headers });
+  }
+  
+  removerFilmeDosFavoritos(filmeId: number) {
+    const token = localStorage.getItem('token');
+    const headers = token ? new HttpHeaders({ Authorization: `Token ${token}` }) : undefined;
+    return this.http.delete(this.apiBase + 'favoritos-filmes/' + filmeId + '/', { headers });
+  }
+
+  /**
+   * Busca os filmes favoritos do usuário e faz o tratamento dos dados para o frontend
+   * Agora retorna também o favoritoId (id do registro FavoritoFilme)
+   */
+  getFilmesFavoritos(): Observable<any[]> {
+    const token = localStorage.getItem('token');
+    const headers = token ? new HttpHeaders({ Authorization: `Token ${token}` }) : undefined;
+    return new Observable(observer => {
+      this.http.get<any[]>(this.apiBase + 'filmes-favoritos/', { headers }).subscribe({
+        next: (favoritos) => {
+          // favoritos: [{id, filme: {...}}]
+          const filmesTratados = (favoritos || []).map(fav => ({
+            favoritoId: fav.id,
+            ...this.tratarFilmes([fav.filme])[0]
+          }));
+          observer.next(filmesTratados);
+          observer.complete();
+        },
+        error: err => observer.error(err)
+      });
+    });
   }
 }

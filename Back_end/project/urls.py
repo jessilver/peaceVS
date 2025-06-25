@@ -20,7 +20,6 @@ from rest_framework import routers
 from rest_framework import permissions
 from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
-from rest_framework.authtoken.views import obtain_auth_token
 from django.views.generic import RedirectView
 
 from users.views import CustomUserViewSet, UserProfileViewSet, CustomObtainAuthToken, UserSignupView, CurrentUserView, ApiRootView
@@ -28,6 +27,7 @@ from conteudo.views import FilmeViewSet, SerieViewSet, TemporadaViewSet, Episodi
 from interactions.views import ItemListaInteresseViewSet, HistoricoVisualizacaoViewSet, AvaliacaoViewSet
 from subscriptions.views import PlanoAssinaturaViewSet, AssinaturaUsuarioViewSet
 from favoritos.views import FavoritoFilmeViewSet, FavoritoSerieViewSet
+from favoritos.api_filmes_favoritos import FilmesFavoritosUsuarioList
 
 router = routers.DefaultRouter()
 # Users
@@ -70,6 +70,7 @@ urlpatterns = [
     path('api/user/me/', CurrentUserView.as_view(), name='current_user'),  # Protegida
     path('api/token/', CustomObtainAuthToken.as_view(), name='api_token_auth'),  # Pública
     path('api/signup/', UserSignupView.as_view(), name='api_signup'),  # Pública
+    path('api/filmes-favoritos/', FilmesFavoritosUsuarioList.as_view(), name='filmes_favoritos_usuario'),
     path('swagger/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
     path('redoc/', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
 ]

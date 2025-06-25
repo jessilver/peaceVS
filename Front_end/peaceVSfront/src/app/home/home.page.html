@@ -2,6 +2,19 @@
 
 <ion-content [fullscreen]="true">
   <div id="container">
+    <!-- Seção de favoritos -->
+    <div *ngIf="user" class="favoritos-section">
+      <h2>Meus Favoritos</h2>
+      <div class="carrossel-filmes">
+        <div *ngIf="filmesFavoritos.length === 0" class="favoritos-vazio">
+          <p>Nenhum filme favorito ainda.</p>
+        </div>
+        <div class="filme-card" *ngFor="let filme of filmesFavoritos" (click)="selecionarFilme(filme)">
+          <img [src]="filme.poster_url" alt="Poster" />
+        </div>
+      </div>
+    </div>
+
     <ng-container *ngFor="let grupo of filmesPorGenero">
       <div *ngIf="grupo.filmes.length > 0" class="genero-section">
         <h2>{{ grupo.genero }}</h2>
@@ -24,6 +37,8 @@
         <p>{{ filmeSelecionado.overview }}</p>
         <p *ngIf="filmeSelecionado.release_date"><strong>Lançamento:</strong> {{ filmeSelecionado.release_date }}</p>
         <p *ngIf="filmeSelecionado.generos"><strong>Gêneros:</strong> {{ filmeSelecionado.generos.join(', ') }}</p>
+        <ion-button *ngIf="!filmeSelecionadoFavorito" expand="block" color="primary" (click)="adicionarAosFavoritos(filmeSelecionado)">Adicionar aos Favoritos</ion-button>
+        <ion-button *ngIf="filmeSelecionadoFavorito" expand="block" color="danger" (click)="removerDosFavoritos(filmeSelecionado)">Remover dos Favoritos</ion-button>
       </div>
       <div class="modal-backdrop" (click)="fecharDetalhes()"></div>
     </div>
