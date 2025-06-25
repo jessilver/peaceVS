@@ -133,9 +133,16 @@
   color: var(--content-primary);
 }
 .detalhes-card p {
-  font-size: 1rem;
-  color: var(--content-secondary);
-  margin: 0.2rem 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 5;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-height: 7em; /* Aproximadamente 5 linhas */
+  white-space: normal;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: var(--primary) var(--surface-l3);
 }
 .detalhes-card .fechar {
   position: absolute;
