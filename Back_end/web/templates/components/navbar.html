@@ -127,6 +127,7 @@
           </li>
         </ul>
       </div>
+      {% if user.is_staff %}
       <!-- Actions -->
       <div class="dropdown actions-dropdown">
         <a
@@ -149,6 +150,7 @@
           </li>
         </ul>
       </div>
+      {% endif %}
     </div>
     <!-- Right elements -->
     {% else %}
